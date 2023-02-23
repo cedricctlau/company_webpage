@@ -9,4 +9,4 @@ grant all privileges on database bad_project_db to bad_project_admin;
 -- latest
 drop database bad_project_db;
 
-psql -U company_admin -W "company_webpage";
+psql -U bad_project_admin -W "bad_project_db";
