@@ -16,7 +16,7 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
   await knex("staffs").insert([
     {
-      email: "admin",
+      local: "admin",
       hashed_pw: "$2y$10$AJvs3POiK91ttvVLNls4C.wxKG0ZxLzOUeyM74YpYLUubCz30WSXC",
       nickname: "admin",
       first_name: "admin",
@@ -28,7 +28,7 @@ export async function seed(knex: Knex): Promise<void> {
       title_id: 1,
     },
     {
-      email: "cedric.ct.lau",
+      local: "cedric.ct.lau",
       hashed_pw: "$2y$10$l3oAgp6GqFeomM0fyOt8Sunx4mXzMHsdm1qGd00p4FEVr15u4NcIa",
       nickname: "Cedric",
       first_name: "Chiu Tung",

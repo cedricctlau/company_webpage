@@ -18,7 +18,7 @@ export async function up(knex: Knex): Promise<void> {
   if (!(await knex.schema.hasTable("staffs"))) {
     await knex.schema.createTable("staffs", (t) => {
       t.increments();
-      t.string("email", 30).notNullable().unique();
+      t.string("local", 30).notNullable().unique();
       t.string("hashed_pw", 100).notNullable();
       t.timestamps(false, true);
       t.string("nickname", 20).notNullable();
