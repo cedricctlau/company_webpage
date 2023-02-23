@@ -28,8 +28,8 @@ describe("Testing login", () => {
 		}) as any;
 		const checkPasswordSpy = jest.fn(checkPassword).mockResolvedValue(true);
 		const staffService = new StaffService(fakeDB, checkPasswordSpy);
-		const json = await staffService.login(local, correctPW.original);
-		expect(json).toEqual({
+		const result = await staffService.login(local, correctPW.original);
+		expect(result).toEqual({
 			success: true,
 			id: 1,
 			nickname: "testBot",
