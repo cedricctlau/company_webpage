@@ -22,6 +22,7 @@ export async function up(knex: Knex): Promise<void> {
       t.string("hashed_pw", 100).notNullable();
       t.timestamps(false, true);
       t.string("nickname", 20).notNullable();
+      t.boolean("active").notNullable().defaultTo("true");
       t.string("first_name", 20).notNullable();
       t.string("last_name", 20).notNullable();
       t.enu("gender", ["M", "F", "other"]).notNullable();

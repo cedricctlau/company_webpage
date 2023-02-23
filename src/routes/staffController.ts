@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import errorHandler from "../helpers/errorHandler";
 import { hashPassword } from "../helpers/hash";
-import UserService from "../services/userService";
+import StaffService from "./staffService";
+import "../helpers/session";
 
-class UserController {
-  constructor(private s: UserService) {}
+export default class StaffController {
+  constructor(private s: StaffService) {}
 
   login = async (req: Request, res: Response) => {
     try {
@@ -12,10 +13,11 @@ class UserController {
         throw new Error("req.session.staff");
       }
       const { email, password } = req.body;
-      const hashedPW = await hashPassword(password);
-      const json = await this.s.login(email, hashedPW);
+      const local = email.substring(0, email.search("@"));
+      const hashed_pw = await hashPassword(password);
+      const json = await this.s.login(local, hashed_pw);
       if (!json.success) {
-        throw json.e;
+        throw json.error;
       }
       {
         // Overwrite session
@@ -41,6 +43,23 @@ class UserController {
         throw e;
       });
       res.json({ success: true });
+    } catch (e) {
+      errorHandler(e, req, res);
+    }
+  };
+
+  changePW = async (req: Request, res: Response) => {
+    try {
+      if (!req.session.staff) {
+        throw new Error(`!req.session.staff`);
+      }
+      const id = req.session.staff.id;
+      const hashed_pw = await hashPassword(req.body.password);
+      const json = await this.s.changePW(id, hashed_pw);
+      if (!json.success) {
+        throw json.error;
+      }
+      res.json(json);
     } catch (e) {
       errorHandler(e, req, res);
     }
