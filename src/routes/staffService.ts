@@ -18,7 +18,8 @@ export default class StaffService {
 			if (!(await this.checkPassword(staff.hashed_pw, hashed_pw))) {
 				throw new Error("!checkPassword");
 			}
-			return { success: true, staff };
+			const { id, nickname, is_hr, is_team_head } = staff;
+			return { success: true, id, nickname, is_hr, is_team_head };
 		} catch (error) {
 			return { success: false, error };
 		}

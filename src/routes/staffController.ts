@@ -24,11 +24,11 @@ export default class StaffController {
 			{
 				// Overwrite session
 				req.session.staff = {
-					id: json.staff.id,
-					nickname: json.staff.nickname,
+					id: json.id,
+					nickname: json.nickname,
 				};
-				req.session.isHR = json.staff.is_hr;
-				req.session.isTeamHead = json.staff.is_team_head;
+				req.session.isHR = json.is_hr;
+				req.session.isTeamHead = json.is_team_head;
 			}
 			res.json(json);
 		} catch (e) {

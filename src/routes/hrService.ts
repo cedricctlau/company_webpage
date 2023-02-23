@@ -1,5 +1,5 @@
 import type { Knex } from "knex";
-import { Profile } from "../helpers/modules";
+import { Profile } from "../helpers/models";
 
 export default class HRService {
 	constructor(private knex: Knex) {}
