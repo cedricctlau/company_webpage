@@ -1,0 +1,12 @@
+--user
+create user bad_project_admin superuser;
+alter user bad_project_admin encrypted password 'tecky';
+
+-- rollback
+create database bad_project_db;
+grant all privileges on database bad_project_db to bad_project_admin;
+
+-- latest
+drop database bad_project_db;
+
+psql -U company_admin -W "company_webpage";
