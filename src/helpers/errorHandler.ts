@@ -6,6 +6,16 @@ interface ErrorLog {
 }
 
 export default function errorHandler(e: any, req: Request, res: Response) {
+  if (!(e instanceof Error)) {
+    console.log(`!!!!!!!! Important: errorHandler failed !!!!!!!!`);
+    console.log({ route: req.route.path, e });
+    res.json({
+      success: false,
+      error: `See backend log => errorHandler failed`,
+      route: req.route.path,
+    });
+    return;
+  }
   const errorLog: ErrorLog = {
     success: false,
     error: {
