@@ -1,5 +1,5 @@
 import { Knex } from "knex";
-import db from "./src/helpers/knex";
+import myDB from "./src/helpers/knex";
 
 async function select(knex: Knex, local: string) {
   const result = await knex("staffs")
@@ -9,4 +9,4 @@ async function select(knex: Knex, local: string) {
   return;
 }
 
-select(db, "admin");
+select(myDB, "admin");

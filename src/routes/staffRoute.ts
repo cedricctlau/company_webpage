@@ -2,12 +2,12 @@ import { Router } from "express";
 import { checkSchema } from "express-validator";
 import errorHandler from "../helpers/errorHandler";
 import { checkPassword } from "../helpers/hash";
-import db from "../helpers/knex";
+import myDB from "../helpers/knex";
 import schema from "../helpers/schema";
 import StaffController from "./staffController";
 import StaffService from "./staffService";
 
-const s = new StaffService(db, checkPassword);
+const s = new StaffService(myDB, checkPassword);
 const c = new StaffController(s, errorHandler);
 
 const staffRoute = Router();

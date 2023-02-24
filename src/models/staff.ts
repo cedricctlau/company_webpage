@@ -16,4 +16,14 @@ interface Staff {
   title_id: number;
 }
 
+export interface StaffProfile {
+  nickname: string;
+  first_name: string;
+  last_name: string;
+  gender: Gender;
+  tel: string;
+  is_hr: boolean;
+  is_team_head: boolean;
+  title_id: number;
+}
 export default Staff;

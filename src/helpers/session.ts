@@ -1,4 +1,5 @@
 import expressSession from "express-session";
+import Staff from "../models/staff";
 
 export const sessionMiddleware = expressSession({
   resave: true,
@@ -8,11 +9,6 @@ export const sessionMiddleware = expressSession({
 
 declare module "express-session" {
   interface SessionData {
-    staff: {
-      id: number;
-      nickname: string;
-    };
-    isHR: boolean;
-    isTeamHead: boolean
+    staff?: Pick<Staff, "id" | "nickname" | "is_hr" | "is_team_head">;
   }
 }

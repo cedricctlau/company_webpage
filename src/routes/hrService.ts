@@ -1,5 +1,5 @@
 import type { Knex } from "knex";
-import { Profile } from "../helpers/models";
+import { StaffProfile } from "../models/staff";
 
 export default class HRService {
 	constructor(private database: Knex) {}
@@ -27,7 +27,7 @@ export default class HRService {
 		}
 	};
 
-	register = async (local: string, hashed_pw: string, profile: Profile) => {
+	register = async (local: string, hashed_pw: string, profile: StaffProfile) => {
 		try {
 			const {
 				nickname,
@@ -57,7 +57,7 @@ export default class HRService {
 		}
 	};
 
-	changeProfile = async (id: string, profile: Profile) => {
+	changeProfile = async (id: string, profile: StaffProfile) => {
 		try {
 			const txn = await this.database.transaction();
 			try {

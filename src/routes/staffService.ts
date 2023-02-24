@@ -1,4 +1,5 @@
 import type { Knex } from "knex";
+import Staff from "../models/staff";
 
 export default class StaffService {
   constructor(
@@ -8,14 +9,18 @@ export default class StaffService {
 
   login = async (local: string, hashed_pw: string) => {
     try {
-      const staffRows = await this.database("staffs")
+      const staffRows = await this.database<Staff>("staffs")
         .select("id", "local", "hashed_pw", "nickname", "is_hr", "is_team_head")
         .where("local", local);
-      if (staffRows.length != 0) {
-        throw new Error("staffRows.length != 0)");
+      if (staffRows.length !== 1) {
+        throw new Error("staffRows.length !== 1");
       }
       const staff = staffRows[0];
-      if (!(await this.checkPassword(staff.hashed_pw, hashed_pw))) {
+      const checkPassword = await this.checkPassword(
+        staff.hashed_pw,
+        hashed_pw
+      );
+      if (!checkPassword) {
         throw new Error("!checkPassword");
       }
       const { id, nickname, is_hr, is_team_head } = staff;

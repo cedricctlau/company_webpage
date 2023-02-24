@@ -1,11 +1,6 @@
 import { checkPassword } from "../src/helpers/hash";
 import StaffService from "../src/routes/staffService";
 
-// import Knex from "knex";
-// const knexConfigs = require("../../knexfile");
-// const knexConfig = knexConfigs["test"];
-// const testKnex = Knex(knexConfig);
-
 describe("Testing login", () => {
   const local = "test";
   const correctPW = {
@@ -14,27 +9,49 @@ describe("Testing login", () => {
     hashedForTesting:
       "$2y$10$K9NUFcZLzRY4nsCB/uxooe0uo8v7R6Bi95pYs21gu6oruy2D7lE4O",
   };
+  const wrongPW = "anotherPassword@^3^@";
+
+  const fakeQuerySuccessful = jest.fn((...others: any[]) => {
+    return {
+      select: (...others: any[]) => {
+        return {
+          where: (...others: any[]) => {
+            return [
+              {
+                id: 1,
+                local,
+                hashed_pw: correctPW.hashedInDB,
+                nickname: "testBot",
+                is_hr: false,
+                is_team_head: true,
+              },
+            ];
+          },
+        };
+      },
+    };
+  });
+
+  const fakeQueryNone = jest.fn((...others: any[]) => {
+    return {
+      select: (...others: any[]) => {
+        return {
+          where: (...others: any[]) => {
+            return [];
+          },
+        };
+      },
+    };
+  });
 
   test("Login properly", async () => {
-    const fakeDB = {} as any;
-    fakeDB.raw = jest.fn(() => {
-      return {
-        rows: [
-          {
-            id: 1,
-            local,
-            hashed_pw: correctPW.hashedInDB,
-            nickname: "testBot",
-            is_hr: false,
-            is_team_head: true,
-          },
-        ],
-      };
-    }) as any;
     const checkPasswordSpy = jest.fn(checkPassword).mockResolvedValue(true);
-    const staffService = new StaffService(fakeDB, checkPasswordSpy);
-    const result = await staffService.login(local, correctPW.original);
-    expect(result).toEqual({
+    const staffService = new StaffService(
+      fakeQuerySuccessful as any,
+      checkPasswordSpy
+    );
+    const json = await staffService.login(local, correctPW.original);
+    expect(json).toEqual({
       success: true,
       id: 1,
       nickname: "testBot",
@@ -42,4 +59,36 @@ describe("Testing login", () => {
       is_team_head: true,
     });
   });
+
+  test("Wrong username", async () => {
+    const checkPasswordSpy = jest.fn(checkPassword).mockResolvedValue(false);
+    const staffService = new StaffService(
+      fakeQuerySuccessful as any,
+      checkPasswordSpy
+    );
+    const json = await staffService.login(local, wrongPW);
+    expect(json.success).toBeFalsy();
+    expect(json.error).toBeDefined();
+    expect(checkPasswordSpy).toBeCalled();
+  });
+
+  test("Wrong password", async () => {
+    const checkPasswordSpy = jest.fn(checkPassword).mockResolvedValue(false);
+    const staffService = new StaffService(
+      fakeQueryNone as any,
+      checkPasswordSpy
+    );
+    const json = await staffService.login(local, wrongPW);
+    expect(json.success).toBeFalsy();
+    expect(json.error).toBeDefined();
+    expect(checkPasswordSpy).not.toBeCalled();
+  });
 });
+
+// describe("Testing changePW", () => {
+//   const staffService = new StaffService(
+//     fakeQueryNone as any,
+//     checkPasswordSpy
+//   );
+//   const checkPasswordSpy = jest.fn(checkPassword).mockResolvedValue(true);
+// });
