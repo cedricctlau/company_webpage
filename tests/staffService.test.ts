@@ -60,7 +60,7 @@ describe("Testing login", () => {
     });
   });
 
-  test("Wrong username", async () => {
+  test("No such username", async () => {
     const checkPasswordSpy = jest.fn(checkPassword).mockResolvedValue(false);
     const staffService = new StaffService(
       fakeQuerySuccessful as any,
@@ -68,7 +68,9 @@ describe("Testing login", () => {
     );
     const json = await staffService.login(local, wrongPW);
     expect(json.success).toBeFalsy();
-    expect(json.error).toBeDefined();
+    expect(async () => {
+      await staffService.login(local, wrongPW);
+    }).toThrow("queryResult.length !== 1");
     expect(checkPasswordSpy).toBeCalled();
   });
 

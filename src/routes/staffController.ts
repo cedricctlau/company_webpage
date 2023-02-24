@@ -18,15 +18,11 @@ export default class StaffController {
       const local = email.substring(0, email.search("@"));
       const hashed_pw = await hashPassword(password);
       const json = await this.s.login(local, hashed_pw);
-      if (!json.success) {
-        throw json.error;
-      }
-      {
-        const { id, nickname, is_hr, is_team_head } = json;
-        // Overwrite session
+      if (json.success) {
+        const { id, nickname, is_hr, is_team_head } = json.result;
         req.session.staff = { id, nickname, is_hr, is_team_head };
+        res.json(json);
       }
-      res.json(json);
     } catch (e) {
       this.errorHandler(e, req, res);
     }

@@ -2,4 +2,4 @@ build
 node_modules
 database_visualization.vuerd
 .env
-try.js
+try
