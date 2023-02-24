@@ -13,7 +13,7 @@ export default class StaffService {
 			.select("id", "local", "hashed_pw", "nickname", "is_hr", "is_team_head")
 			.where("local", local);
 		if (!queryResult.length) {
-			return { success: false, message: "No such staff" };
+			return { success: false, message: "No such username" };
 		}
 		const staff = queryResult[0];
 		const checkPassword = await this.checkPassword(staff.hashed_pw, hashed_pw);
