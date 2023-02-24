@@ -2,7 +2,7 @@ import type { Knex } from "knex";
 import { Profile } from "../helpers/models";
 
 export default class HRService {
-	constructor(private knex: Knex) {}
+	constructor(private database: Knex) {}
 
 	createLocal = async (
 		nickname: string,
@@ -15,7 +15,7 @@ export default class HRService {
 				return (initials += word.toLowerCase().at(0));
 			}, "");
 			let local = nickname + "." + initials + "." + last_name;
-			const staffRows = await this.knex("staffs")
+			const staffRows = await this.database("staffs")
 				.select("id", "local")
 				.whereLike("local", `${local}%`);
 			if (staffRows.length !== 0) {
@@ -39,7 +39,7 @@ export default class HRService {
 				is_team_head,
 				title_id,
 			} = profile;
-			await this.knex("staffs").insert({
+			await this.database("staffs").insert({
 				local,
 				hashed_pw,
 				nickname,
@@ -59,7 +59,7 @@ export default class HRService {
 
 	changeProfile = async (id: string, profile: Profile) => {
 		try {
-			const txn = await this.knex.transaction();
+			const txn = await this.database.transaction();
 			try {
 				const {
 					nickname,
@@ -71,7 +71,7 @@ export default class HRService {
 					is_team_head,
 					title_id,
 				} = profile;
-				const staffRows = await this.knex("staffs")
+				const staffRows = await this.database("staffs")
 					.where("id", id)
 					.update({
 						nickname,

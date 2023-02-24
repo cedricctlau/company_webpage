@@ -49,6 +49,22 @@ const config: { [key: string]: Knex.Config } = {
       tableName: "knex_migrations",
     },
   },
+  test: {
+    client: "postgresql",
+    connection: {
+      database: process.env.DB_NAME_TEST,
+      user: process.env.DB_USER_TEST,
+      password: process.env.DB_PASSWORD_TEST,
+      host: process.env.DB_HOST_TEST,
+    },
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations: {
+      tableName: "knex_migrations",
+    },
+  },
 };
 
 module.exports = config;
