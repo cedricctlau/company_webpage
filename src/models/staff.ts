@@ -2,6 +2,7 @@ import Gender from "./gender";
 
 interface Staff {
   id: number;
+  local: string;
   hashed_pw: string;
   created_at: string;
   modified_at: string;

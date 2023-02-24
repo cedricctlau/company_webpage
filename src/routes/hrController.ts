@@ -35,7 +35,11 @@ export default class HRController {
         is_team_head,
         title_id,
       } = req.body;
-      const profile = {
+      const local = email.substring(0, email.search("@"));
+      const hashed_pw = await this.hashPassword(password);
+      const json = await this.s.register(
+        local,
+        hashed_pw,
         nickname,
         first_name,
         last_name,
@@ -43,11 +47,8 @@ export default class HRController {
         tel,
         is_hr,
         is_team_head,
-        title_id,
-      };
-      const local = email.substring(0, email.search("@"));
-      const hashed_pw = await this.hashPassword(password);
-      const json = await this.s.register(local, hashed_pw, profile);
+        title_id
+      );
       if (!json.success) {
         throw json.error;
       }

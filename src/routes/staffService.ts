@@ -9,13 +9,13 @@ export default class StaffService {
 
   login = async (local: string, hashed_pw: string) => {
     try {
-      const staffRows = await this.database<Staff>("staffs")
+      const queryResult = await this.database<Staff>("staffs")
         .select("id", "local", "hashed_pw", "nickname", "is_hr", "is_team_head")
         .where("local", local);
-      if (staffRows.length !== 1) {
-        throw new Error("staffRows.length !== 1");
+      if (queryResult.length !== 1) {
+        throw new Error("queryResult.length !== 1");
       }
-      const staff = staffRows[0];
+      const staff = queryResult[0];
       const checkPassword = await this.checkPassword(
         staff.hashed_pw,
         hashed_pw
@@ -32,20 +32,11 @@ export default class StaffService {
 
   changePW = async (id: number, hashed_pw: string) => {
     try {
-      const txn = await this.database.transaction();
-      try {
-        const staffRows = await txn("staffs")
-          .where("id", id)
-          .update("hashed_pw", hashed_pw)
-          .returning("*");
-        if (staffRows.length !== 1) {
-          throw `staffRows.length !== 1`;
-        }
-        await txn.commit();
-      } catch (e) {
-        await txn.rollback();
-      }
-      return { success: true };
+      const queryResult = await this.database("staffs")
+        .where("id", id)
+        .update("hashed_pw", hashed_pw)
+        .returning("*");
+      return { success: true, queryResult };
     } catch (error) {
       return { success: false, error };
     }
