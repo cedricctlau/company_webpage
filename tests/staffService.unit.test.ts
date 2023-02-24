@@ -58,7 +58,7 @@ describe("Testing login", () => {
 	});
 
 	test("Incorrect password", async () => {
-		const mockedKnex = jest.fn().mockResolvedValue(queryBuilders_Successful);
+		const mockedKnex = jest.fn().mockReturnValue(queryBuilders_Successful);
 		const mockedCheckPassword = jest.fn().mockResolvedValue(false);
 		const staffService = new StaffService(
 			mockedKnex as any,
