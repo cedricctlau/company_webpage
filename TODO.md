@@ -1,16 +1,26 @@
 # TODO List
 
-## admin routes
+## 2023.02.24
 
+    [/] upgrade services and controllers => remove catch
+    [/] complete tests
+
+## 2023.02.25
+
+### admin routes
     [] add department
     [] add title
 
-## announcement w/ socket
+### announcement w/ socket.io
 
     [] HR -> to all
     [] department head -> to department only
 
-## 2023.02.24
+### wether api
+    [] this
 
-    [] upgrade services and controllers => remove catch
-    [] complete tests
+### front-end
+
+### attendance (optional)
+
+### apply leave (optional)

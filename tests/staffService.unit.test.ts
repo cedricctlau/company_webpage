@@ -28,14 +28,11 @@ describe("Testing login", () => {
 		where: jest.fn().mockReturnValue([]),
 	};
 
-	test("Login properly", async () => {
-		const mockedKnex = jest.fn().mockReturnValue(queryBuilders_Successful);
-		const mockedCheckPassword = jest.fn().mockResolvedValue(true);
-		const staffService = new StaffService(
-			mockedKnex as any,
-			mockedCheckPassword
-		);
-		const json = await staffService.login(local, correctPW.original);
+	it("should check login data with database and then pass session details to the controller", async () => {
+		const mKnex = jest.fn().mockReturnValue(queryBuilders_Successful);
+		const mCheckPassword = jest.fn().mockResolvedValue(true);
+		const mSVC = new StaffService(mKnex as any, mCheckPassword);
+		const json = await mSVC.login(local, correctPW.original);
 		expect(json.outcome).toEqual({
 			id: 1,
 			nickname: "testBot",
@@ -44,29 +41,23 @@ describe("Testing login", () => {
 		});
 	});
 
-	test("No such username", async () => {
-		const mockedKnex = jest.fn().mockReturnValue(queryBuilders_NoResult);
-		const mockedCheckPassword = jest.fn();
-		const staffService = new StaffService(
-			mockedKnex as any,
-			mockedCheckPassword
-		);
-		const json = await staffService.login(local, wrongPW);
+	it("should check whether the username exists", async () => {
+		const nKnex = jest.fn().mockReturnValue(queryBuilders_NoResult);
+		const mCheckPassword = jest.fn();
+		const mSVC = new StaffService(nKnex as any, mCheckPassword);
+		const json = await mSVC.login(local, wrongPW);
 		expect(json.success).toBeFalsy();
 		expect(json.message).toBe("No such username");
-		expect(mockedCheckPassword).not.toBeCalled();
+		expect(mCheckPassword).not.toHaveBeenCalled();
 	});
 
-	test("Incorrect password", async () => {
-		const mockedKnex = jest.fn().mockReturnValue(queryBuilders_Successful);
-		const mockedCheckPassword = jest.fn().mockResolvedValue(false);
-		const staffService = new StaffService(
-			mockedKnex as any,
-			mockedCheckPassword
-		);
-		const json = await staffService.login(local, wrongPW);
+	it("should check whether the password is correct", async () => {
+		const mKnex = jest.fn().mockReturnValue(queryBuilders_Successful);
+		const mCheckPassword = jest.fn().mockResolvedValue(false);
+		const mSVC = new StaffService(mKnex as any, mCheckPassword);
+		const json = await mSVC.login(local, wrongPW);
 		expect(json.success).toBeFalsy();
 		expect(json.message).toBe("Incorrect password");
-		expect(mockedCheckPassword).toBeCalled();
+		expect(mCheckPassword).toHaveBeenCalled();
 	});
 });

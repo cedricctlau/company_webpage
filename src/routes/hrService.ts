@@ -15,7 +15,7 @@ export default class HRService {
 			(initials, word) => (initials += word.toLowerCase().at(0)),
 			""
 		);
-		let local = nickname + "." + initials + "." + last_name;
+		let local = nickname.toLowerCase() + initials + last_name.toLowerCase();
 		const queryResult = await this.database<Staff>("staffs")
 			.select("id", "local")
 			.whereLike("local", `${local}%`);
@@ -69,18 +69,16 @@ export default class HRService {
 			is_team_head,
 			title_id,
 		} = profile;
-		const staffRows = await this.database<Staff>("staffs")
-			.where("id", id)
-			.update({
-				nickname,
-				first_name,
-				last_name,
-				gender,
-				tel,
-				is_hr,
-				is_team_head,
-				title_id,
-			});
+		await this.database<Staff>("staffs").where("id", id).update({
+			nickname,
+			first_name,
+			last_name,
+			gender,
+			tel,
+			is_hr,
+			is_team_head,
+			title_id,
+		});
 		return { success: true };
 	};
 }
