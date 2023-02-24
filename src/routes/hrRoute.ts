@@ -7,12 +7,13 @@ import schema from "../helpers/schema";
 import HRController from "./hrController";
 import HRService from "./hrService";
 
-const s = new HRService(myDB);
-const c = new HRController(s, hashPassword, errorHandler);
+const svc = new HRService(myDB);
+const ctr = new HRController(svc, hashPassword, errorHandler);
 
 const hrRoute = Router();
 
-hrRoute.get("/createLocal", c.createLocal);
-hrRoute.put("/register", checkSchema(schema["register"]), c.register);
+hrRoute.get("/createLocal", ctr.createLocal);
+hrRoute.put("/register", checkSchema(schema["register"]), ctr.register);
+hrRoute.put("/changeProfile", ctr.changeProfile);
 
 export default hrRoute;
