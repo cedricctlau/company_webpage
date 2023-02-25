@@ -8,7 +8,7 @@ export default class HRController {
 		private errorHandler: (e: any, req: Request, res: Response) => void
 	) {}
 
-	createLocal = async (req: Request, res: Response) => {
+	createLocal = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const { nickname, first_name, last_name } = req.body;
 			const json = await this.s.createLocal(nickname, first_name, last_name);
@@ -18,7 +18,7 @@ export default class HRController {
 		}
 	};
 
-	register = async (req: Request, res: Response) => {
+	register = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const {
 				email,
@@ -51,7 +51,7 @@ export default class HRController {
 		}
 	};
 
-	changeProfile = async (req: Request, res: Response) => {
+	changeProfile = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const id = req.params.id;
 			const {

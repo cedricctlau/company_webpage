@@ -46,7 +46,7 @@ describe("Testing login", () => {
 		const mCheckPassword = jest.fn();
 		const mSVC = new StaffService(nKnex as any, mCheckPassword);
 		const json = await mSVC.login(local, wrongPW);
-		expect(json.success).toBeFalsy();
+		expect(json.success).toBeTruthy();
 		expect(json.message).toBe("No such username");
 		expect(mCheckPassword).not.toHaveBeenCalled();
 	});
@@ -56,7 +56,7 @@ describe("Testing login", () => {
 		const mCheckPassword = jest.fn().mockResolvedValue(false);
 		const mSVC = new StaffService(mKnex as any, mCheckPassword);
 		const json = await mSVC.login(local, wrongPW);
-		expect(json.success).toBeFalsy();
+		expect(json.success).toBeTruthy();
 		expect(json.message).toBe("Incorrect password");
 		expect(mCheckPassword).toHaveBeenCalled();
 	});

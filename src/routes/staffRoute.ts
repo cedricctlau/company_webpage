@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { checkSchema } from "express-validator";
-import errorHandler from "../helpers/errorHandler";
+import myErrorHandler from "../helpers/errorHandler";
 import { loginGuard } from "../helpers/guard";
 import { checkPassword, hashPassword } from "../helpers/hash";
 import myDB from "../helpers/knex";
@@ -9,7 +9,7 @@ import StaffController from "./staffController";
 import StaffService from "./staffService";
 
 const svc = new StaffService(myDB, checkPassword);
-const ctr = new StaffController(svc, hashPassword, errorHandler);
+const ctr = new StaffController(svc, hashPassword, myErrorHandler);
 
 const staffRoute = Router();
 

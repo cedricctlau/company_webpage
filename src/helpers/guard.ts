@@ -1,32 +1,47 @@
 import { Request, Response, NextFunction } from "express";
-import errorHandler from "./errorHandler";
+import myErrorHandler from "./errorHandler";
 
 export const loginGuard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
+	req: Request,
+	res: Response,
+	next: NextFunction
 ) => {
-  try {
-    if (!req.session) {
-      throw new Error("!req.session");
-    }
-    next();
-  } catch (e) {
-    errorHandler(e, req, res);
-  }
+	try {
+		if (!req.session) {
+			throw new Error("Login Guard: failed");
+		}
+		next();
+	} catch (error) {
+		myErrorHandler(error, req, res);
+	}
 };
 
 export const hrGuard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
+	req: Request,
+	res: Response,
+	next: NextFunction
 ) => {
-  try {
-    if (!req.session.isHR) {
-      throw new Error("!req.session.isHR");
-    }
-    next();
-  } catch (e) {
-    errorHandler(e, req, res);
-  }
+	try {
+		if (!req.session.staff?.is_hr) {
+			throw new Error("HR Guard: failed");
+		}
+		next();
+	} catch (error) {
+		myErrorHandler(error, req, res);
+	}
+};
+
+export const adminGuard = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		if (req.session.staff?.id !== 1) {
+			throw new Error("Admin Guard: failed");
+		}
+		next();
+	} catch (error) {
+		myErrorHandler(error, req, res);
+	}
 };

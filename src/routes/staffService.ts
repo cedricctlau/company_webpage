@@ -13,12 +13,12 @@ export default class StaffService {
 			.select("id", "local", "hashed_pw", "nickname", "is_hr", "is_team_head")
 			.where("local", local);
 		if (!queryResult.length) {
-			return { success: false, message: "No such username" };
+			return { success: true, message: "No such username" };
 		}
 		const staff = queryResult[0];
 		const checkPassword = await this.checkPassword(staff.hashed_pw, hashed_pw);
 		if (!checkPassword) {
-			return { success: false, message: "Incorrect password" };
+			return { success: true, message: "Incorrect password" };
 		}
 		const { id, nickname, is_hr, is_team_head } = staff;
 		return { success: true, outcome: { id, nickname, is_hr, is_team_head } };
@@ -27,7 +27,7 @@ export default class StaffService {
 	changePW = async (id: number, hashed_pw: string): Promise<Reply> => {
 		await this.database("staffs")
 			.where("id", id)
-			.update("hashed_pw", hashed_pw)
+			.update({hashed_pw})
 			.returning("id");
 		return { success: true };
 	};

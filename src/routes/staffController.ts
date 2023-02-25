@@ -9,7 +9,7 @@ export default class StaffController {
 		private errorHandler: (e: any, req: Request, res: Response) => void
 	) {}
 
-	login = async (req: Request, res: Response) => {
+	login = async (req: Request, res: Response): Promise<void> => {
 		try {
 			if (req.session.staff) {
 				res.json({ success: false, message: `req.session.staff` });
@@ -29,7 +29,7 @@ export default class StaffController {
 		}
 	};
 
-	logout = async (req: Request, res: Response) => {
+	logout = async (req: Request, res: Response): Promise<void> => {
 		try {
 			req.session.destroy((error) => {
 				throw error;
@@ -40,7 +40,7 @@ export default class StaffController {
 		}
 	};
 
-	changePW = async (req: Request, res: Response) => {
+	changePW = async (req: Request, res: Response): Promise<void> => {
 		try {
 			if (!req.session.staff) {
 				throw new Error(`!req.session.staff`);

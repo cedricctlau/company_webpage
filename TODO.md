@@ -8,8 +8,9 @@
 ## 2023.02.25
 
 ### admin routes
-    [] add department
-    [] add title
+    [/] add department
+    [/] add title
+    [] add tests
 
 ### announcement w/ socket.io
 
