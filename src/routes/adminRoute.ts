@@ -1,10 +1,10 @@
 import { Router } from "express";
 import myErrorHandler from "../helpers/errorHandler";
-import myDB from "../helpers/knex";
+import myKnex from "../helpers/knex";
 import AdminController from "./adminController";
 import AdminService from "./adminService";
 
-const s = new AdminService(myDB);
+const s = new AdminService(myKnex);
 const c = new AdminController(s, myErrorHandler);
 
 const adminRoute = Router();

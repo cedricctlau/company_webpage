@@ -4,12 +4,12 @@ import Staff from "../models/staff";
 
 export default class StaffService {
 	constructor(
-		private database: Knex,
+		private knex: Knex,
 		private checkPassword: (a: string, b: string) => Promise<boolean>
 	) {}
 
 	login = async (local: string, hashed_pw: string): Promise<Reply> => {
-		const queryResult = await this.database<Staff>("staffs")
+		const queryResult = await this.knex<Staff>("staffs")
 			.select("id", "local", "hashed_pw", "nickname", "is_hr", "is_team_head")
 			.where("local", local);
 		if (!queryResult.length) {
@@ -25,7 +25,7 @@ export default class StaffService {
 	};
 
 	changePW = async (id: number, hashed_pw: string): Promise<Reply> => {
-		await this.database("staffs")
+		await this.knex("staffs")
 			.where("id", id)
 			.update({hashed_pw})
 			.returning("id");

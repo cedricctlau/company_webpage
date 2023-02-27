@@ -12,6 +12,7 @@ export async function up(knex: Knex): Promise<void> {
   if (!(await knex.schema.hasTable("department-announcement"))) {
     await knex.schema.createTable("department-announcement", (t) => {
       t.increments();
+      t.boolean("is_public_announcement").notNullable();
       t.integer("department_id").notNullable().unsigned();
       t.integer("announcement_id").notNullable().unsigned();
       t.foreign("department_id").references("departments.id");
