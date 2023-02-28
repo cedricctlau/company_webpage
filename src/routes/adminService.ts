@@ -13,10 +13,10 @@ class AdminService {
 		const qryResult = await this.knex<Title>("titles")
 			.insert({ title, department_id })
 			.returning("*");
-		return { success: true, outcome: { created: qryResult } };
+		return { success: true, outcome: { created: qryResult[0] } };
 	};
 
-	changeTitle = async (
+	editTitle = async (
 		id: number,
 		title: string,
 		department_id: number
@@ -25,37 +25,22 @@ class AdminService {
 			.where("id", id)
 			.update({ title, department_id })
 			.returning("*");
-		return { success: true, outcome: { updated: qryResult } };
-	};
-
-	deleteTitle = async (id: number): Promise<Reply> => {
-		const qryResult = await this.knex<Title>("titles")
-			.where("id", id)
-			.del()
-			.returning("*");
-		return { success: true, outcome: { deleted: qryResult } };
+		return { success: true, outcome: { updated: qryResult[0] } };
 	};
 
 	createDepartment = async (department: string): Promise<Reply> => {
 		const qryResult = await this.knex<Department>("departments")
 			.insert({ department })
 			.returning("*");
-		return { success: true, outcome: { created: qryResult } };
+		return { success: true, outcome: { created: qryResult[0] } };
 	};
-	changeDepartment = async (id: number, department: string): Promise<Reply> => {
+
+	editDepartment = async (id: number, department: string): Promise<Reply> => {
 		const qryResult = await this.knex<Department>("departments")
 			.where("id", id)
 			.update({ department })
 			.returning("*");
-		return { success: true, outcome: { updated: qryResult } };
-	};
-
-	deleteDepartment = async (id: number): Promise<Reply> => {
-		const qryResult = await this.knex<Department>("departments")
-			.where("id", id)
-			.del()
-			.returning("*");
-		return { success: true, outcome: { deleted: qryResult } };
+		return { success: true, outcome: { updated: qryResult[0] } };
 	};
 }
 

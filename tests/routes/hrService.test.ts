@@ -1,4 +1,4 @@
-import HRService from "../src/routes/hrService";
+import HRService from "../../src/routes/hrService";
 
 describe("testing createLocal", () => {
 	it("should create proper local", async () => {

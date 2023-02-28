@@ -17,21 +17,11 @@ class AdminController {
 		}
 	};
 
-	changeTitle = async (req: Request, res: Response): Promise<void> => {
+	editTitle = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const id = parseInt(req.params.id);
 			const { title, department_id } = req.body;
-			const json = await this.s.changeTitle(id, title, department_id);
-			res.json(json);
-		} catch (error) {
-			this.errorHandler(error, req, res);
-		}
-	};
-
-	deleteTitle = async (req: Request, res: Response): Promise<void> => {
-		try {
-			const id = parseInt(req.params.id);
-			const json = await this.s.deleteTitle(id);
+			const json = await this.s.editTitle(id, title, department_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
@@ -48,21 +38,11 @@ class AdminController {
 		}
 	};
 
-	changeDepartment = async (req: Request, res: Response): Promise<void> => {
+	editDepartment = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const id = parseInt(req.params.id);
 			const { department } = req.body;
-			const json = await this.s.changeDepartment(id, department);
-			res.json(json);
-		} catch (error) {
-			this.errorHandler(error, req, res);
-		}
-	};
-
-	deleteDepartment = async (req: Request, res: Response): Promise<void> => {
-		try {
-			const id = parseInt(req.params.id);
-			const json = await this.s.deleteDepartment(id);
+			const json = await this.s.editDepartment(id, department);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);

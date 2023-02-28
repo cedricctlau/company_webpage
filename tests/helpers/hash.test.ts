@@ -1,4 +1,4 @@
-import { checkPassword, hashPassword } from "../src/helpers/hash";
+import { checkPassword, hashPassword } from "../../src/helpers/hash";
 
 const correctPW = {
 	original: "aSpecificPassword@ff20!",

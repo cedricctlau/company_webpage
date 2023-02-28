@@ -10,11 +10,9 @@ const s = new AdminService(myKnex);
 const c = new AdminController(s, myErrorHandler);
 
 adminRoute.put("/createTitle", c.createTitle);
-adminRoute.post("/changeTitle/:id", c.changeTitle);
-adminRoute.delete("/deleteTitle/:id", c.deleteTitle);
+adminRoute.post("/changeTitle/:id", c.editTitle);
 
 adminRoute.put("/creteDepartment", c.createDepartment);
-adminRoute.post("/changeDepartment/:id", c.changeDepartment);
-adminRoute.delete("/deleteDepartment/:id", c.deleteDepartment);
+adminRoute.post("/changeDepartment/:id", c.editDepartment);
 
 export default adminRoute;

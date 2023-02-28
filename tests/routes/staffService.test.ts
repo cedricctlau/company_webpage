@@ -1,4 +1,4 @@
-import StaffService from "../src/routes/staffService";
+import StaffService from "../../src/routes/staffService";
 
 describe("Testing login", () => {
 	const local = "test";
