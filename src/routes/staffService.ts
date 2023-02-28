@@ -1,6 +1,6 @@
 import type { Knex } from "knex";
 import Reply from "../models/reply";
-import Staff from "../models/staff";
+import Staff, { StaffProfile } from "../models/staff";
 
 export default class StaffService {
 	constructor(
@@ -25,10 +25,37 @@ export default class StaffService {
 	};
 
 	changePW = async (id: number, hashed_pw: string): Promise<Reply> => {
-		await this.knex("staffs")
+		await this.knex<Staff>("staffs")
 			.where("id", id)
-			.update({hashed_pw})
+			.update({ hashed_pw })
 			.returning("id");
 		return { success: true };
+	};
+
+	getProfile = async (id: number): Promise<Reply> => {
+		const profileQry = await this.knex<Staff>("staffs")
+			.where({ id })
+			.select("*");
+		const {
+			nickname,
+			first_name,
+			last_name,
+			gender,
+			tel,
+			is_hr,
+			is_team_head,
+			title_id,
+		} = profileQry[0];
+		const profile: StaffProfile = {
+			nickname,
+			first_name,
+			last_name,
+			gender,
+			tel,
+			is_hr,
+			is_team_head,
+			title_id,
+		};
+		return { success: true, outcome: { profile } };
 	};
 }

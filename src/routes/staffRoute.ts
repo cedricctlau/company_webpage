@@ -8,18 +8,19 @@ import schema from "../helpers/schema";
 import StaffController from "./staffController";
 import StaffService from "./staffService";
 
-const svc = new StaffService(myKnex, checkPassword);
-const ctr = new StaffController(svc, hashPassword, myErrorHandler);
-
 const staffRoute = Router();
 
-staffRoute.post("/login", checkSchema(schema["login"]), ctr.login);
-staffRoute.get("/logout", loginGuard, ctr.logout);
+const s = new StaffService(myKnex, checkPassword);
+const c = new StaffController(s, hashPassword, myErrorHandler);
+
+staffRoute.post("/login", checkSchema(schema["login"]), c.login);
+staffRoute.get("/logout", loginGuard, c.logout);
 staffRoute.put(
 	"/changePW",
 	loginGuard,
 	checkSchema(schema["register"]["password"]),
-	ctr.changePW
+	c.changePW
 );
+staffRoute.get("getProfile", c.getProfile);
 
 export default staffRoute;

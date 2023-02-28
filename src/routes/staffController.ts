@@ -53,4 +53,17 @@ export default class StaffController {
 			this.errorHandler(error, req, res);
 		}
 	};
+
+	getProfile = async (req: Request, res: Response): Promise<void> => {
+		try {
+			if (!req.session.staff) {
+				throw new Error(`!req.session.staff`);
+			}
+			const id = req.session.staff.id;
+			const json = await this.s.getProfile(id);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
 }

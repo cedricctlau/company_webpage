@@ -7,13 +7,13 @@ import schema from "../helpers/schema";
 import HRController from "./hrController";
 import HRService from "./hrService";
 
-const svc = new HRService(myKnex);
-const ctr = new HRController(svc, hashPassword, myErrorHandler);
-
 const hrRoute = Router();
 
-hrRoute.get("/createLocal", ctr.createLocal);
-hrRoute.put("/register", checkSchema(schema["register"]), ctr.register);
-hrRoute.put("/changeProfile", ctr.changeProfile);
+const s = new HRService(myKnex);
+const c = new HRController(s, hashPassword, myErrorHandler);
+
+hrRoute.get("/createLocal", c.createLocal);
+hrRoute.put("/register", checkSchema(schema["register"]), c.register);
+hrRoute.put("/changeProfile", c.changeProfile);
 
 export default hrRoute;

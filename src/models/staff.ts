@@ -1,10 +1,8 @@
-import Gender from "./gender";
-
 export interface StaffProfile {
 	nickname: string;
 	first_name: string;
 	last_name: string;
-	gender: Gender;
+	gender: "M" | "F" | "Other";
 	tel: string;
 	is_hr: boolean;
 	is_team_head: boolean;

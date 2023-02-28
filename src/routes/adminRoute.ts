@@ -4,10 +4,10 @@ import myKnex from "../helpers/knex";
 import AdminController from "./adminController";
 import AdminService from "./adminService";
 
+const adminRoute = Router();
+
 const s = new AdminService(myKnex);
 const c = new AdminController(s, myErrorHandler);
-
-const adminRoute = Router();
 
 adminRoute.put("/createTitle", c.createTitle);
 adminRoute.post("/changeTitle/:id", c.changeTitle);

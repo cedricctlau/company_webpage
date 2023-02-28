@@ -1,7 +1,8 @@
 interface Announcement {
-  id: number;
-  announcement: string;
-  staff_id: number;
+	id: number;
+	announcement: string;
+	is_public: boolean;
+	staff_id: number;
 }
 
 export default Announcement;

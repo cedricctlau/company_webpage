@@ -13,11 +13,75 @@ class AnnouncementController {
 			if (!req.session.staff) {
 				throw new Error(`!req.session.staff`);
 			}
-			const id = req.session.staff.id;
-			const json = await this.s.getAnnouncements(id);
+			const staff_id = req.session.staff.id;
+			const json = await this.s.getAnnouncements(staff_id);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	announceToAll = async (req: Request, res: Response): Promise<void> => {
+		try {
+			if (!req.session.staff) {
+				throw new Error(`!req.session.staff`);
+			}
+			const staff_id = req.session.staff.id;
+			const { announcement } = req.body;
+			const json = await this.s.announceToAll(staff_id, announcement);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	announceToDepartment = async (req: Request, res: Response): Promise<void> => {
+		try {
+			if (!req.session.staff) {
+				throw new Error(`!req.session.staff`);
+			}
+			const staff_id = req.session.staff.id;
+			const { department_id, announcement } = req.body;
+			const json = await this.s.announceToDepartment(
+				staff_id,
+				announcement,
+				department_id
+			);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	editAnnouncement = async (req: Request, res: Response): Promise<void> => {
+		try {
+			if (!req.session.staff) {
+				throw new Error(`!req.session.staff`);
+			}
+			const id = parseInt(req.params.id);
+			const staff_id = req.session.staff.id;
+			const { announcement } = req.body;
+			const json = await this.s.editAnnouncement(id, announcement, staff_id);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	delAnnouncement = async (req: Request, res: Response): Promise<void> => {
+		try {
+			if (!req.session.staff) {
+				throw new Error(`!req.session.staff`);
+			}
+			const id = parseInt(req.params.id);
+			const staff_id = req.session.staff.id;
+			const is_admin = req.session.staff.id === 1;
+			const json = await this.s.delAnnouncement(id, staff_id, is_admin);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 }
+
+export default AnnouncementController

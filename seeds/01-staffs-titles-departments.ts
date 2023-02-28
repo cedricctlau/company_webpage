@@ -1,4 +1,7 @@
 import { Knex } from "knex";
+import Department from "../src/models/department";
+import Staff from "../src/models/staff";
+import Title from "../src/models/title";
 
 export async function seed(knex: Knex): Promise<void> {
 	// Deletes ALL existing entries
@@ -7,22 +10,22 @@ export async function seed(knex: Knex): Promise<void> {
 	await knex("titles").del();
 
 	// Inserts seed entries
-	await knex("departments").insert([
+	await knex<Department>("departments").insert([
 		{ department: "admin" },
 		{ department: "Human Resources" },
 	]);
-	await knex("titles").insert([
+	await knex<Title>("titles").insert([
 		{ title: "admin", department_id: 1 },
 		{ title: "Human Resources Manager", department_id: 2 },
 	]);
-	await knex("staffs").insert([
+	await knex<Staff>("staffs").insert([
 		{
 			local: "admin",
 			hashed_pw: "$2y$10$AJvs3POiK91ttvVLNls4C.wxKG0ZxLzOUeyM74YpYLUubCz30WSXC",
 			nickname: "admin",
 			first_name: "admin",
 			last_name: "admin",
-			gender: "other",
+			gender: "Other",
 			tel: "23800000",
 			is_hr: true,
 			is_team_head: true,
