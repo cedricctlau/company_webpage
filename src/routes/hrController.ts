@@ -21,7 +21,7 @@ export default class HRController {
 	register = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const {
-				email,
+				username,
 				password,
 				nickname,
 				first_name,
@@ -32,7 +32,7 @@ export default class HRController {
 				is_team_head,
 				title_id,
 			} = req.body;
-			const local = email.substring(0, email.search("@"));
+			const local = username.substring(0, username.search("@"));
 			const hashed_pw = await this.hashPassword(password);
 			const profile = {
 				nickname,
