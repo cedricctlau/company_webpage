@@ -1,0 +1,3 @@
+cd ~\Documents\Tecky-exercise\BAD\Company_Dashboard\
+yarn build
+cp .\protected\*.* .\build\protected\

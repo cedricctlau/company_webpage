@@ -35,7 +35,7 @@ describe("Testing HR controller", () => {
     });
   });
 
-  it.only("can register", async () => {
+  it("can register", async () => {
     const req = {
       body: {
         username: "testing@tecky.io",
@@ -64,7 +64,7 @@ describe("Testing HR controller", () => {
     });
   });
 
-  it("can change profile", () => {
+  it("can change profile", async () => {
     const req = {
       params: { id: 5 },
       body: {
@@ -77,14 +77,14 @@ describe("Testing HR controller", () => {
         is_team_head: false,
         title_id: 3,
       },
-    };
+    } as any as Request;
     s.changeProfile = jest.fn(
       (id: string, profile: StaffProfile) =>
         new Promise((resolve, reject) => resolve({ success: true }))
     );
-    const res = { json: jest.fn() };
-    expect(res.json).toBeCalledWith({
-      success: true,
-    });
+    const res = { json: jest.fn() } as any as Response;
+
+    await c.changeProfile(req,res)
+    expect(res.json).toBeCalledWith({ success: true });
   });
 });
