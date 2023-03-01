@@ -1,7 +1,9 @@
 interface Announcement {
 	id: number;
-	announcement: string;
+	content: string;
 	is_public: boolean;
+	created_at: string;
+	modified_at:string;
 	staff_id: number;
 }
 

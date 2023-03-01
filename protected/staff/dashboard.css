@@ -1,0 +1,21 @@
+#announcement,
+#weather {
+	margin: 1.3vw;
+	border: 5px solid gray;
+	height: 90vh;
+}
+
+.annc {
+	/* border: 2px solid #999; */
+	margin: 8px 0px;
+}
+
+.annc > .note {
+	font-size: 10px;
+	/* color: #bbbbbb; */
+	text-align: center;
+}
+
+.annc-header {
+	text-align: center;
+}

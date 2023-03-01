@@ -27,8 +27,8 @@ class AnnouncementController {
 				throw new Error(`!req.session.staff`);
 			}
 			const staff_id = req.session.staff.id;
-			const { announcement } = req.body;
-			const json = await this.s.announceToAll(staff_id, announcement);
+			const { content } = req.body;
+			const json = await this.s.announceToAll(staff_id, content);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
@@ -41,10 +41,10 @@ class AnnouncementController {
 				throw new Error(`!req.session.staff`);
 			}
 			const staff_id = req.session.staff.id;
-			const { department_id, announcement } = req.body;
+			const { department_id, content } = req.body;
 			const json = await this.s.announceToDepartment(
 				staff_id,
-				announcement,
+				content,
 				department_id
 			);
 			res.json(json);
@@ -60,8 +60,8 @@ class AnnouncementController {
 			}
 			const id = parseInt(req.params.id);
 			const staff_id = req.session.staff.id;
-			const { announcement } = req.body;
-			const json = await this.s.editAnnouncement(id, announcement, staff_id);
+			const { content } = req.body;
+			const json = await this.s.editAnnouncement(id, content, staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);

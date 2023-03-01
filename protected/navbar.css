@@ -1,0 +1,8 @@
+.navbar-brand {
+	font-size: 30px;
+	padding-left: 1vw;
+}
+
+.navbar-brand > span {
+	margin: 0px 8px;
+}
