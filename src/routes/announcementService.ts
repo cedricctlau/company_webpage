@@ -1,5 +1,5 @@
 import { Knex } from "knex";
-import Announcement from "../models/announcement";
+import Ancmt from "../models/ancmt";
 import DepartmentAnnouncement from "../models/departmentAnnouncement";
 import Reply from "../models/reply";
 import Staff from "../models/staff";
@@ -14,9 +14,7 @@ class AnnouncementService {
       .select("s.id", "d.id as department_id")
       .where({ "s.id": staff_id });
     const department_id = checkDepartmentQry[0]["department_id"];
-    const getAnnouncementQry = await this.knex<Announcement>(
-      "announcements AS a"
-    )
+    const getAnnouncementQry = await this.knex<Ancmt>("announcements AS a")
       .leftJoin("staffs AS s", "s.id", "a.staff_id")
       .leftJoin("department-announcement AS da", "a.id", "da.announcement_id")
       .select("a.content", "s.local", "a.is_public", "a.updated_at")
@@ -35,7 +33,7 @@ class AnnouncementService {
   };
 
   announceToAll = async (staff_id: number, content: string): Promise<Reply> => {
-    const addAnnouncementQry = await this.knex<Announcement>("announcements")
+    const addAnnouncementQry = await this.knex<Ancmt>("announcements")
       .insert({ staff_id, content, is_public: true })
       .returning(["id", "staff_id", "content"]);
     const json = {
@@ -50,7 +48,7 @@ class AnnouncementService {
     content: string,
     department_id: number
   ): Promise<Reply> => {
-    const addAnnouncementQry = await this.knex<Announcement>("announcements")
+    const addAnnouncementQry = await this.knex<Ancmt>("announcements")
       .insert({ staff_id, content, is_public: false })
       .returning(["id", "staff_id", "content"]);
     const announcement_id = addAnnouncementQry[0].id;
@@ -75,7 +73,7 @@ class AnnouncementService {
   ): Promise<Reply> => {
     const txn = await this.knex.transaction();
     try {
-      const editQry = await this.knex<Announcement>("announcements")
+      const editQry = await this.knex<Ancmt>("announcements")
         .where({ id })
         .update({ content })
         .returning(["id", "content", "staff_id"]);

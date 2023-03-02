@@ -1,89 +1,117 @@
 import { type Knex } from "knex";
-import Announcement from "../src/models/announcement";
-import Department from "../src/models/department";
-import DepartmentAnnouncement from "../src/models/departmentAnnouncement";
+import Ancmt, { DeptAncmt, TeamAncmt } from "../src/models/ancmt";
+import Dept, { DeptMember } from "../src/models/dept";
+import PersonalInfo from "../src/models/personalInfo";
+import Profile from "../src/models/profile";
 import Staff from "../src/models/staff";
+import Team, { TeamMember } from "../src/models/team";
 import Title from "../src/models/title";
 
 export async function seed(knex: Knex): Promise<void> {
   const txn = await knex.transaction();
   try {
     // Deletes ALL existing entries
-    await knex("department-announcement").del();
-    await knex("announcements").del();
-    await knex("staffs").del();
-    await knex("titles").del();
-    await knex("departments").del();
+    await txn("team-members").del();
+    await txn("dept-members").del();
+    await txn("team-ancmts").del();
+    await txn("dept-ancmts").del();
+    await txn("ancmts").del();
+    await txn("staffs").del();
+    await txn("personal-infos").del();
+    await txn("profiles").del();
+    await txn("titles").del();
+    await txn("teams").del();
+    await txn("depts").del();
 
     // Inserts seed entries
-    await knex<Department>("departments").insert([
-      { department: "IT" },
-      { department: "Human Resources" },
-      { department: "Production" },
+    await txn<Dept>("depts").insert([
+      { dept: "IT" },
+      { dept: "Human Resources" },
+      { dept: "Production" },
     ]);
-    await knex<Title>("titles").insert([
-      { title: "IT Manager", department_id: 1 },
-      { title: "Junior Developer", department_id: 1 },
-      { title: "Human Resources Manager", department_id: 2 },
+    await txn<Team>("teams").insert([
+      { team: "Team Ho Wan" },
+      { team: "Team Hea" },
     ]);
-    await knex<Staff>("staffs").insert([
+    await txn<Title>("titles").insert([
+      { title: "IT Manager" },
+      { title: "Junior Developer" },
+      { title: "Human Resources Manager" },
+    ]);
+    await txn<Profile>("profiles").insert([
       {
-        local: "admin",
-        hashed_pw:
-          "$2y$10$AJvs3POiK91ttvVLNls4C.wxKG0ZxLzOUeyM74YpYLUubCz30WSXC",
-        nickname: "admin",
-        first_name: "admin",
-        last_name: "admin",
-        gender: "Other",
+        nickname: "test",
+        first_name: "test",
+        last_name: "test",
+        gender: "Others",
         tel: "23800000",
-        is_hr: true,
-        is_team_head: true,
         title_id: 1,
       },
+    ]);
+    await txn<PersonalInfo>("personal-infos").insert([
       {
-        local: "testing",
-        hashed_pw:
-          "$2y$10$l3oAgp6GqFeomM0fyOt8Sunx4mXzMHsdm1qGd00p4FEVr15u4NcIa",
-        nickname: "Tes",
-        first_name: "Ting I",
-        last_name: "Ng",
-        gender: "M",
-        tel: "23800000",
-        is_hr: false,
-        is_team_head: false,
-        title_id: 2,
-      },
-      {
-        local: "testing1",
-        hashed_pw:
-          "$2y$10$l3oAgp6GqFeomM0fyOt8Sunx4mXzMHsdm1qGd00p4FEVr15u4NcIa",
-        nickname: "T",
-        first_name: "E Sang",
-        last_name: "Ting",
-        gender: "F",
-        tel: "23800000",
-        is_hr: true,
-        is_team_head: true,
-        title_id: 3,
+        hkid: "A123456(7)",
+        date_of_birth: "2023-03-02",
+        address: "Candy Int. Ltd., 20B, TML Tower, 3 Hoi Shing Rd, Tsuen Wan",
+        bank_account: "000000000000000",
+        salary: 109700,
       },
     ]);
-    await knex<Announcement>("announcements").insert([
+    await txn<Staff>("staffs").insert([
       {
-        content: "Welcome to Candy!",
+        username: "admin@candy.io",
+        hashed_pw:
+          "$2y$10$OsE9Hql5fum.CyneRLSWGuiFLbzQ77qm4ez/GE3p/vA4/h2i67BgK",
+        priv_all: true,
+        priv_dept: true,
+        priv_team: true,
+        priv_private: true,
+        profile_id: 1,
+        personal_info_id: 1,
+      },
+      {
+        username: "hr@candy.io",
+        hashed_pw:
+          "$2y$10$OsE9Hql5fum.CyneRLSWGuiFLbzQ77qm4ez/GE3p/vA4/h2i67BgK",
+        priv_all: true,
+        priv_dept: true,
+        priv_team: true,
+        priv_private: true,
+        profile_id: 1,
+        personal_info_id: 1,
+      },
+    ]);
+    await txn<Ancmt>("ancmts").insert([
+      {
+        content: "Welcome to Candy Int. Ltd.!",
         staff_id: 1,
         is_public: true,
       },
       {
-        content: "Testing announcement",
+        content: "Announce to IT department!",
+        staff_id: 1,
+        is_public: false,
+      },
+      {
+        content: "Announce to Team Ho Wan!",
         staff_id: 1,
         is_public: false,
       },
     ]);
-    await knex<DepartmentAnnouncement>("department-announcement").insert([
-      { announcement_id: 2, department_id: 1 },
+    await txn<DeptAncmt>("dept-ancmts").insert([{ ancmt_id: 2, dept_id: 1 }]);
+    await txn<TeamAncmt>("team-ancmts").insert([{ ancmt_id: 3, team_id: 1 }]);
+    await txn<DeptMember>("dept-members").insert([
+      { staff_id: 1, dept_id: 1 },
+      { staff_id: 2, dept_id: 2 },
+    ]);
+    await txn<TeamMember>("team-members").insert([
+      { staff_id: 1, team_id: 1 },
+      { staff_id: 2, team_id: 2 },
     ]);
     await txn.commit();
   } catch (error) {
+    console.log(`=====Insuccessful transaction! Rollback!=====`);
+    console.error(error);
     await txn.rollback();
   }
 }

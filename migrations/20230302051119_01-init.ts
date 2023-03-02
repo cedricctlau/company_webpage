@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   if (!(await knex.schema.hasTable("depts"))) {
     await knex.schema.createTable("depts", (t) => {
       t.increments();
-      t.string("depts").notNullable().unique();
+      t.string("dept").notNullable().unique();
     });
   }
   if (!(await knex.schema.hasTable("teams"))) {
@@ -50,9 +50,12 @@ export async function up(knex: Knex): Promise<void> {
       t.boolean("priv_all").notNullable();
       t.boolean("priv_dept").notNullable();
       t.boolean("priv_team").notNullable();
+      t.boolean("priv_private").notNullable();
       t.timestamps(false, true);
       t.integer("profile_id").notNullable().unsigned();
       t.foreign("profile_id").references("profiles.id");
+      t.integer("personal_info_id").notNullable().unsigned();
+      t.foreign("personal_info_id").references("personal-infos.id");
     });
   }
   if (!(await knex.schema.hasTable("dept-members"))) {
@@ -60,8 +63,8 @@ export async function up(knex: Knex): Promise<void> {
       t.increments();
       t.integer("staff_id").notNullable().unsigned();
       t.foreign("staff_id").references("staffs.id");
-      t.integer("dept").notNullable().unsigned();
-      t.foreign("dept").references("dept.id");
+      t.integer("dept_id").notNullable().unsigned();
+      t.foreign("dept_id").references("depts.id");
     });
   }
   if (!(await knex.schema.hasTable("team-members"))) {
@@ -78,6 +81,7 @@ export async function up(knex: Knex): Promise<void> {
       t.increments();
       t.string("content").notNullable();
       t.timestamps(false, true);
+      t.boolean("is_public").notNullable();
       t.integer("staff_id").notNullable().unsigned();
       t.foreign("staff_id").references("staffs.id");
     });
@@ -92,22 +96,22 @@ export async function up(knex: Knex): Promise<void> {
     });
   }
   if (!(await knex.schema.hasTable("team-ancmts"))) {
-    await knex.schema.createTable("team-ancmt", (t) => {
+    await knex.schema.createTable("team-ancmts", (t) => {
       t.increments();
-      t.integer("dept_id").notNullable().unsigned();
+      t.integer("team_id").notNullable().unsigned();
       t.integer("ancmt_id").notNullable().unsigned();
-      t.foreign("dept_id").references("depts.id");
+      t.foreign("team_id").references("teams.id");
       t.foreign("ancmt_id").references("ancmts.id");
     });
   }
 }
 
 export async function down(knex: Knex): Promise<void> {
-  if (await knex.schema.hasTable("team-ancmt")) {
-    await knex.schema.dropTable("team-ancmt");
+  if (await knex.schema.hasTable("team-ancmts")) {
+    await knex.schema.dropTable("team-ancmts");
   }
-  if (await knex.schema.hasTable("dept-ancmt")) {
-    await knex.schema.dropTable("dept-ancmt");
+  if (await knex.schema.hasTable("dept-ancmts")) {
+    await knex.schema.dropTable("dept-ancmts");
   }
   if (await knex.schema.hasTable("ancmts")) {
     await knex.schema.dropTable("ancmts");
