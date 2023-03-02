@@ -1,21 +1,35 @@
 #announcement,
 #weather {
-	margin: 1.3vw;
-	border: 5px solid gray;
-	height: 90vh;
+  margin: 1.3vw;
+  border: 5px solid gray;
+  height: 80vh;
+  max-width: 95vw;
 }
 
-.annc {
-	/* border: 2px solid #999; */
-	margin: 8px 0px;
+.ancmt {
+  margin: 8px 0px;
 }
 
-.annc > .note {
-	font-size: 10px;
-	/* color: #bbbbbb; */
-	text-align: center;
+.ancmt > .note {
+  font-size: 10px;
+  text-align: center;
 }
 
-.annc-header {
-	text-align: center;
+.ancmt-header {
+  text-align: center;
+}
+
+.flex-container-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-container-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.welcome {
+  color: azure;
+  padding: 0.375rem 0.75rem;
 }

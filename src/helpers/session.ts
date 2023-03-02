@@ -1,5 +1,5 @@
 import expressSession from "express-session";
-import Staff from "../models/staff";
+import Priv from "../models/priv";
 
 export const sessionMiddleware = expressSession({
   resave: true,
@@ -9,6 +9,7 @@ export const sessionMiddleware = expressSession({
 
 declare module "express-session" {
   interface SessionData {
-    staff?: Pick<Staff, "id" | "nickname" | "is_hr" | "is_team_head">;
+    staff_id?: number;
+    priv?: Priv;
   }
 }

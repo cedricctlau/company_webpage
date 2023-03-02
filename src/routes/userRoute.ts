@@ -13,7 +13,7 @@ const userRoute = Router();
 const s = new UserService(myKnex, checkPassword);
 const c = new UserController(s, hashPassword, myErrorHandler);
 
-userRoute.post("/login", checkSchema(schema["login"]), c.login);
+userRoute.post("/login", c.login);
 userRoute.get("/logout", loginGuard, c.logout);
 userRoute.put(
   "/changePW",
@@ -21,7 +21,8 @@ userRoute.put(
   checkSchema(schema["register"]["password"]),
   c.changePW
 );
-userRoute.get("/getProfile", c.getProfile);
-userRoute.get("/checkPrivilege",c.checkPrivilege)
+// userRoute.get("/getProfile", c.getProfile);
+userRoute.get("/getNickname", c.getNickname);
+userRoute.get("/checkPrivilege", c.checkPrivilege);
 
 export default userRoute;

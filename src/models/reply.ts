@@ -1,4 +1,4 @@
-interface Reply {
+type Reply = {
 	success: boolean;
 	message?: string;
 	outcome?: any;

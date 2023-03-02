@@ -1,5 +1,5 @@
 {
-  "name": "company_webpage",
+  "name": "company_dashboard",
   "version": "1.0.0",
   "description": "a company website as its name implies",
   "main": "./src/main.ts",
