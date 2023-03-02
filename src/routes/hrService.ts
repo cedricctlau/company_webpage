@@ -1,6 +1,6 @@
 import type { Knex } from "knex";
 import Reply from "../models/reply";
-import Staff, { StaffProfile } from "../models/staff";
+import Staff from "../models/staff";
 
 export default class HRService {
   constructor(private knex: Knex) {}

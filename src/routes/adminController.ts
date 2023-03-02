@@ -9,8 +9,8 @@ class AdminController {
 
 	createTitle = async (req: Request, res: Response): Promise<void> => {
 		try {
-			const { title, department_id } = req.body;
-			const json = await this.s.createTitle(title, department_id);
+			const { title } = req.body;
+			const json = await this.s.createTitle(title);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
@@ -20,29 +20,50 @@ class AdminController {
 	editTitle = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const id = parseInt(req.params.id);
-			const { title, department_id } = req.body;
-			const json = await this.s.editTitle(id, title, department_id);
+			const { title } = req.body;
+			const json = await this.s.editTitle(id, title);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 
-	createDepartment = async (req: Request, res: Response): Promise<void> => {
+	createDept = async (req: Request, res: Response): Promise<void> => {
 		try {
-			const { department } = req.body;
-			const json = await this.s.createDepartment(department);
+			const { dept } = req.body;
+			const json = await this.s.createDept(dept);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 
-	editDepartment = async (req: Request, res: Response): Promise<void> => {
+	editDept = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const id = parseInt(req.params.id);
-			const { department } = req.body;
-			const json = await this.s.editDepartment(id, department);
+			const { dept } = req.body;
+			const json = await this.s.editDept(id, dept);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	createTeam = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const { team } = req.body;
+			const json = await this.s.createTeam(team);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	editTeam = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const id = parseInt(req.params.id);
+			const { team } = req.body;
+			const json = await this.s.editTeam(id, team);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);

@@ -1,10 +1,17 @@
 --user
 create user bad_project_admin superuser;
-alter user bad_project_admin encrypted password 'tecky';
+alter user bad_project_admin encrypted password 'xxxxx';
 
+-- production
 drop database bad_project_db;
 create database bad_project_db;
 grant all privileges on database bad_project_db to bad_project_admin;
 
-psql -U postgres
+
+-- test
+drop database test_bad_project_db;
+create database test_bad_project_db;
+grant all privileges on database test_bad_project_db to bad_project_admin;
+
+psql -U postgres;
 psql -U bad_project_admin -W "bad_project_db";

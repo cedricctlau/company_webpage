@@ -10,10 +10,7 @@ class AnnouncementController {
 
 	getAnnouncements = async (req: Request, res: Response): Promise<void> => {
 		try {
-			if (!req.session.staff) {
-				throw new Error(`!req.session.staff`);
-			}
-			const staff_id = req.session.staff.id;
+			const staff_id = req.session.staff?.id as number;
 			const json = await this.s.getAnnouncements(staff_id);
 			res.json(json);
 		} catch (error) {
@@ -23,10 +20,7 @@ class AnnouncementController {
 
 	announceToAll = async (req: Request, res: Response): Promise<void> => {
 		try {
-			if (!req.session.staff) {
-				throw new Error(`!req.session.staff`);
-			}
-			const staff_id = req.session.staff.id;
+			const staff_id = req.session.staff?.id as number;
 			const { content } = req.body;
 			const json = await this.s.announceToAll(staff_id, content);
 			res.json(json);
@@ -37,10 +31,7 @@ class AnnouncementController {
 
 	announceToDepartment = async (req: Request, res: Response): Promise<void> => {
 		try {
-			if (!req.session.staff) {
-				throw new Error(`!req.session.staff`);
-			}
-			const staff_id = req.session.staff.id;
+			const staff_id = req.session.staff?.id as number;
 			const { department_id, content } = req.body;
 			const json = await this.s.announceToDepartment(
 				staff_id,
@@ -55,11 +46,14 @@ class AnnouncementController {
 
 	editAnnouncement = async (req: Request, res: Response): Promise<void> => {
 		try {
-			if (!req.session.staff) {
-				throw new Error(`!req.session.staff`);
-			}
 			const id = parseInt(req.params.id);
-			const staff_id = req.session.staff.id;
+			const staff_id = req.session.staff?.id as number;
+			const owner_id = req.body.id as number;
+			if (staff_id !== owner_id) {
+				throw new Error(
+					`This hacker tried to del an announcement owned by others`
+				);
+			}
 			const { content } = req.body;
 			const json = await this.s.editAnnouncement(id, content, staff_id);
 			res.json(json);
@@ -70,13 +64,13 @@ class AnnouncementController {
 
 	delAnnouncement = async (req: Request, res: Response): Promise<void> => {
 		try {
-			if (!req.session.staff) {
-				throw new Error(`!req.session.staff`);
+			const ancmt_id = parseInt(req.params.id);
+			const staff_id = req.session.staff?.id as number;
+			const owner_id  = req.body.id as number;
+			if (staff_id !== owner_id){
+				throw new Error (`This hacker tried to del an announcement owned by others`)
 			}
-			const id = parseInt(req.params.id);
-			const staff_id = req.session.staff.id;
-			const is_admin = req.session.staff.id === 1;
-			const json = await this.s.delAnnouncement(id, staff_id, is_admin);
+			const json = await this.s.delAnnouncement(ancmt_id, staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);

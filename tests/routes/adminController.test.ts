@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import AdminController from "../../src/routes/adminController";
+import AdminController from "../../src/routes/archives/adminController";
 import AdminService from "../../src/routes/adminService";
 
 jest.mock("../../src/routes/adminService");

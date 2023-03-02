@@ -1,22 +1,20 @@
-type Ancmt = {
-  id: number;
-  content: string;
-  created_at: string;
-  updated_at: string;
-  staff_id: number;
-  is_public: boolean;
-};
+export type PublicAncmt = {
+	id: number;
+} & Ancmt;
 
 export type DeptAncmt = {
-  id: number;
-  dept_id: number;
-  ancmt_id: number;
-};
+	id: number;
+	dept_id: number;
+} & Ancmt;
 
 export type TeamAncmt = {
-  id: number;
-  team_id: number;
-  ancmt_id: number;
-};
+	id: number;
+	team_id: number;
+} & Ancmt;
 
-export default Ancmt;
+type Ancmt = {
+	content: string;
+	created_at: string;
+	updated_at: string;
+	staff_id: number;
+};

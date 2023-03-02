@@ -1,120 +1,151 @@
 import { Knex } from "knex";
-import Ancmt from "../models/ancmt";
-import DepartmentAnnouncement from "../models/departmentAnnouncement";
+import { PublicAncmt, DeptAncmt, TeamAncmt } from "../models/ancmt";
+import { DeptMember } from "../models/dept";
 import Reply from "../models/reply";
-import Staff from "../models/staff";
+import { TeamMember } from "../models/team";
 
 class AnnouncementService {
-  constructor(private knex: Knex) {}
+	constructor(private knex: Knex) {}
 
-  getAnnouncements = async (staff_id: number): Promise<Reply> => {
-    const checkDepartmentQry = await this.knex<Staff>("staffs AS s")
-      .leftJoin("titles as t", "s.title_id", "t.id")
-      .leftJoin("departments AS d", "t.department_id", "d.id")
-      .select("s.id", "d.id as department_id")
-      .where({ "s.id": staff_id });
-    const department_id = checkDepartmentQry[0]["department_id"];
-    const getAnnouncementQry = await this.knex<Ancmt>("announcements AS a")
-      .leftJoin("staffs AS s", "s.id", "a.staff_id")
-      .leftJoin("department-announcement AS da", "a.id", "da.announcement_id")
-      .select("a.content", "s.local", "a.is_public", "a.updated_at")
-      .where("da.department_id", department_id)
-      .orWhere("a.is_public", true)
-      .orderBy("a.created_at", "desc");
-    const announcements = getAnnouncementQry.map((ANNC) => {
-      ANNC.created_at = ANNC.created_at.substring(0, 10);
-      return ANNC;
-    });
-    const json = {
-      success: true,
-      outcome: { announcements },
-    };
-    return json;
-  };
+	getAnnouncements = async (staff_id: number): Promise<Reply> => {
+		const PublicAncmtQry = await this.knex<PublicAncmt>("public-ancmts").select("*")
 
-  announceToAll = async (staff_id: number, content: string): Promise<Reply> => {
-    const addAnnouncementQry = await this.knex<Ancmt>("announcements")
-      .insert({ staff_id, content, is_public: true })
-      .returning(["id", "staff_id", "content"]);
-    const json = {
-      success: true,
-      outcome: { addedAnnouncement: addAnnouncementQry[0] },
-    };
-    return json;
-  };
 
-  announceToDepartment = async (
-    staff_id: number,
-    content: string,
-    department_id: number
-  ): Promise<Reply> => {
-    const addAnnouncementQry = await this.knex<Ancmt>("announcements")
-      .insert({ staff_id, content, is_public: false })
-      .returning(["id", "staff_id", "content"]);
-    const announcement_id = addAnnouncementQry[0].id;
-    const linkAnnouncementToDepartmentQry =
-      await this.knex<DepartmentAnnouncement>("department-announcement")
-        .insert({ department_id, announcement_id })
-        .returning(["department_id", "announcement_id"]);
-    const json = {
-      success: true,
-      outcome: {
-        addedAnnouncement: addAnnouncementQry[0],
-        addedRelationship: linkAnnouncementToDepartmentQry[0],
-      },
-    };
-    return json;
-  };
+		const deptQuery = await this.knex<DeptMember>("dept-members")
+			.select("dept_id")
+			.where("staff_id", staff_id);
+		const dept_ids = deptQuery.map((obj) => obj.dept_id);
+		const teamQuery = await this.knex<TeamMember>("team-members")
+			.select("team_id")
+			.where("staff_id", staff_id);
+		const team_ids = teamQuery.map((obj) => obj.team_id);
+		const ancmts = qryResult.map((row) => {
+			return {
+				id: row.id,
+				content: row.content,
+				creator: row.staff_id,
+				updated_at: row.updated_at.substring(0, 10),
+				is_public: row.is_public,
+				dept_id: row.department_id,
+				team_id: row.team_id,
+				owned: row.staff_id === staff_id,
+			};
+		});
+		return {
+			success: true,
+			outcome: { ancmts },
+		};
+	};
 
-  editAnnouncement = async (
-    id: number,
-    content: string,
-    staff_id: number
-  ): Promise<Reply> => {
-    const txn = await this.knex.transaction();
-    try {
-      const editQry = await this.knex<Ancmt>("announcements")
-        .where({ id })
-        .update({ content })
-        .returning(["id", "content", "staff_id"]);
-      if (editQry[0].staff_id !== staff_id) {
-        throw new Error("No permission");
-      }
-      await txn.commit();
-      const edited = editQry[0];
-      const json = { success: true, outcome: { edited } };
-      return json;
-    } catch (e) {
-      await txn.rollback();
-      const error = e as Error;
-      return { success: false, message: error.message };
-    }
-  };
+	announceToAll = async (staff_id: number, content: string): Promise<Reply> => {
+		const addAnnouncementQry = await this.knex<PublicAncmt>("announcements")
+			.insert({ staff_id, content, is_public: true })
+			.returning(["id", "staff_id", "content"]);
+		const ancmt_id = addAnnouncementQry[0].id;
+		return { success: true, outcome: { ancmt_id } };
+	};
 
-  delAnnouncement = async (
-    id: number,
-    staff_id: number,
-    is_admin: boolean
-  ): Promise<Reply> => {
-    const txn = await this.knex.transaction();
-    try {
-      const delQry = await txn("announcements as a")
-        .where({ id })
-        .join("department-announcement as da", "a.id", "da.announcement_id")
-        .del()
-        .returning(["id", "content", "staff_id"]);
-      if (!is_admin && delQry[0].staff_id !== staff_id) {
-        throw new Error("No permission");
-      }
-      await txn.commit();
-      const json = { success: true, outcome: { deleted: delQry[0] } };
-      return json;
-    } catch (e) {
-      await txn.rollback();
-      const error = e as Error;
-      return { success: false, message: error.message };
-    }
-  };
+	announceToDepartment = async (
+		staff_id: number,
+		content: string,
+		dept_id: number
+	): Promise<Reply> => {
+		const checkDeptQuery = await this.knex<DeptMember>("dept-members")
+			.select("*")
+			.where({ staff_id, dept_id });
+		if (!checkDeptQuery.length) {
+			throw new Error(
+				`This hacker try to announce to a department without membership.`
+			);
+		}
+		const addAnnouncementQry = await this.knex<PublicAncmt>("announcements")
+			.insert({ staff_id, content, is_public: false })
+			.returning("id");
+		const ancmt_id = addAnnouncementQry[0].id;
+		const addRelationQry = await this.knex<DeptAncmt>("dept-ancmts")
+			.insert({
+				dept_id,
+				ancmt_id,
+			})
+			.returning("id");
+		const dept_ancmt_id = addRelationQry[0].id;
+		return { success: true, outcome: { ancmt_id, dept_ancmt_id } };
+	};
+
+	announceToTeam = async (
+		staff_id: number,
+		content: string,
+		team_id: number
+	): Promise<Reply> => {
+		const checkDeptQuery = await this.knex<TeamMember>("team-members")
+			.select("*")
+			.where({ staff_id, team_id });
+		if (!checkDeptQuery.length) {
+			throw new Error(
+				`This hacker try to announce to a team without membership.`
+			);
+		}
+		const addAnnouncementQry = await this.knex<PublicAncmt>("announcements")
+			.insert({ staff_id, content, is_public: false })
+			.returning("id");
+		const ancmt_id = addAnnouncementQry[0].id;
+		const addRelationQry = await this.knex<TeamAncmt>("team-ancmts")
+			.insert({
+				team_id,
+				ancmt_id,
+			})
+			.returning("id");
+		const team_ancmt_id = addRelationQry[0].id;
+		return { success: true, outcome: { ancmt_id, team_ancmt_id } };
+	};
+
+	editAnnouncement = async (
+		id: number,
+		content: string,
+		staff_id: number
+	): Promise<Reply> => {
+		const editQry = await this.knex<PublicAncmt>("announcements")
+			.where({ id, staff_id })
+			.update({ content })
+			.returning(["id", "content", "staff_id"]);
+		if (!editQry.length) {
+			throw new Error(
+				`This hacker tried to del an announcement owned by others`
+			);
+		}
+		const editedEntry = editQry[0];
+		return { success: true, outcome: { editedEntry } };
+	};
+
+	delAnnouncement = async (
+		ancmt_id: number,
+		staff_id: number
+	): Promise<Reply> => {
+		const delRelationQry1 = await this.knex<DeptAncmt>("dept-ancmts")
+			.where({ ancmt_id })
+			.del()
+			.returning("id");
+		const delRelationQry2 = await this.knex<TeamAncmt>("team-ancmts")
+			.where({ ancmt_id })
+			.del()
+			.returning("id");
+		const delQry = await this.knex("announcements")
+			.where({ id: ancmt_id, staff_id })
+			.del()
+			.returning(["id", "content", "staff_id"]);
+		if (!delQry.length) {
+			throw new Error(
+				`This hacker tried to del an announcement owned by others`
+			);
+		}
+		const deletedEntry = delQry[0];
+		const deletedRelationship = delRelationQry1.length + delRelationQry2.length;
+		const json = {
+			success: true,
+			outcome: { deletedEntry, deletedRelationship },
+		};
+		return json;
+	};
 }
 
 export default AnnouncementService;

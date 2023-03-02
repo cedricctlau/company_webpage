@@ -4,7 +4,7 @@ type PersonalInfo = {
   date_of_birth: string;
   address: string;
   bank_account: string;
-  salary: number;
+  monthly_salary: number;
 };
 
 export default PersonalInfo;

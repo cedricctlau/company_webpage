@@ -1,47 +1,62 @@
 import { Knex } from "knex";
 import Dept from "../models/dept";
 import Reply from "../models/reply";
+import Team from "../models/team";
 import Title from "../models/title";
 
 class AdminService {
-  constructor(private knex: Knex) {}
+	constructor(private knex: Knex) {}
 
-  createTitle = async (
-    title: string,
-    department_id: number
-  ): Promise<Reply> => {
-    const qryResult = await this.knex<Title>("titles")
-      .insert({ title, department_id })
-      .returning("*");
-    return { success: true, outcome: { created: qryResult[0] } };
-  };
+	createTitle = async (title: string): Promise<Reply> => {
+		const qryResult = await this.knex<Title>("titles")
+			.insert({ title })
+			.returning("*");
+		const createdEntry = qryResult[0];
+		return { success: true, outcome: { createdEntry } };
+	};
 
-  editTitle = async (
-    id: number,
-    title: string,
-    department_id: number
-  ): Promise<Reply> => {
-    const qryResult = await this.knex<Title>("titles")
-      .where("id", id)
-      .update({ title, department_id })
-      .returning("*");
-    return { success: true, outcome: { updated: qryResult[0] } };
-  };
+	editTitle = async (id: number, title: string): Promise<Reply> => {
+		const qryResult = await this.knex<Title>("titles")
+			.where("id", id)
+			.update({ title })
+			.returning("*");
+		const editedEntry = qryResult[0];
+		return { success: true, outcome: { editedEntry } };
+	};
 
-  createDepartment = async (department: string): Promise<Reply> => {
-    const qryResult = await this.knex<Dept>("departments")
-      .insert({ dept: department })
-      .returning("*");
-    return { success: true, outcome: { created: qryResult[0] } };
-  };
+	createDept = async (dept: string): Promise<Reply> => {
+		const qryResult = await this.knex<Dept>("depts")
+			.insert({ dept })
+			.returning("*");
+		const createdEntry = qryResult[0];
+		return { success: true, outcome: { createdEntry } };
+	};
 
-  editDepartment = async (id: number, department: string): Promise<Reply> => {
-    const qryResult = await this.knex<Dept>("departments")
-      .where("id", id)
-      .update({ dept: department })
-      .returning("*");
-    return { success: true, outcome: { updated: qryResult[0] } };
-  };
+	editDept = async (id: number, dept: string): Promise<Reply> => {
+		const qryResult = await this.knex<Dept>("depts")
+			.where("id", id)
+			.update({ dept })
+			.returning("*");
+		const editedEntry = qryResult[0];
+		return { success: true, outcome: { editedEntry } };
+	};
+
+	createTeam = async (team: string): Promise<Reply> => {
+		const qryResult = await this.knex<Team>("teams")
+			.insert({ team })
+			.returning("*");
+		const createdEntry = qryResult[0];
+		return { success: true, outcome: { createdEntry } };
+	};
+
+	editTeam = async (id: number, team: string): Promise<Reply> => {
+		const qryResult = await this.knex<Team>("teams")
+			.where("id", id)
+			.update({ team })
+			.returning("*");
+		const editedEntry = qryResult[0];
+		return { success: true, outcome: { editedEntry } };
+	};
 }
 
 export default AdminService;

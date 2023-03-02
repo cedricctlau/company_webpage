@@ -1,8 +1,14 @@
-#announcement,
-#weather {
-  margin: 1.3vw;
+#public-ancmt {
+  margin: 5vh 1.3vw;
   border: 5px solid gray;
   height: 80vh;
+  max-width: 95vw;
+}
+
+#dept-ancmt {
+  margin: 5vh 1.3vw;
+  border: 5px solid gray;
+  height: 90vh;
   max-width: 95vw;
 }
 
@@ -15,7 +21,7 @@
   text-align: center;
 }
 
-.ancmt-header {
+.section-header {
   text-align: center;
 }
 
