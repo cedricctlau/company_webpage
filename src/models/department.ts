@@ -1,4 +1,4 @@
-interface Department {
+type Department = {
     id:number;
     department: string
 }

@@ -1,21 +1,31 @@
-export interface StaffProfile {
-	nickname: string;
-	first_name: string;
-	last_name: string;
-	gender: "M" | "F" | "Other";
-	tel: string;
-	is_hr: boolean;
-	is_team_head: boolean;
-	title_id: number;
-}
+export type Staff = {
+  id: number;
+  account_id: number;
+  profile_id: number;
+  personal_info_id: number;
+};
 
-interface Staff extends StaffProfile {
-	id: number;
-	local: string;
-	hashed_pw: string;
-	created_at: string;
-	modified_at: string;
-	active: boolean;
-}
+export type Account = {
+  id: number;
+  username: string;
+  hashed_pw: string;
+  active: boolean;
+};
 
-export default Staff;
+export type Profile = {
+  id: number;
+  nickname: string;
+  first_name: string;
+  last_name: string;
+  gender: "M" | "F" | "Others";
+  tel: string;
+  staff_id: number;
+  title_id: number;
+  team_id: number;
+};
+
+export type PersonalInfo = {
+  id: number;
+  hkid: string;
+  address: string;
+};
