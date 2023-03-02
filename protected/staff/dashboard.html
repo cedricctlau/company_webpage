@@ -23,33 +23,26 @@
   </head>
   <body>
     <nav class="navbar bg-dark" data-bs-theme="dark">
-      <div class="container-fluid">
-        <section class="btn-container">
-          <button
-            class="btn btn-outline-light"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#menu-offcanvas"
-          >
-            <i class="fa-solid fa-bars"></i>
-          </button>
+      <div class="container-fluid row">
+        <section class="col">
+          <div class="btn-container">
+            <button
+              class="btn btn-outline-light"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#menu-offcanvas"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </div>
         </section>
-        <section>
+        <section class="col flex-container-center">
           <a class="navbar-brand" href="../../public/index.html"
             ><span><i class="fa-solid fa-candy-cane"></i></span
-            ><span>Candy</span></a
+            ><span>Candy Int. Co.L</span></a
           >
         </section>
-        <section>
+        <section class="col flex-container-end">
           <div class="welcome">Welcome</div>
-          <div class="btn-container">
-            <a
-              class="btn btn-outline-light"
-              href="../hr/register.html"
-              id="register-btn"
-              >Register</a
-            >
-            <a class="btn btn-outline-light">Logout</a>
-          </div>
         </section>
       </div>
     </nav>
@@ -58,24 +51,28 @@
       <div class="container-fluid">
         <div class="row">
           <section id="announcement" class="col-md">
-            <div class="annc-header">
+            <div class="ancmt-header">
               <h4>Announcements</h4>
               <div class="btn-holder">
                 <a
-                  class="btn btn-danger"
-                  href="../hr/annc-to-all.html"
-                  id="ANNC-to-all-btn"
+                  class="btn btn-outline-danger"
+                  href="../hr/ancmt-to-all.html"
+                  id="ancmt-to-all-btn"
                   >Announce to all</a
-                >
-                <a
-                  class="btn btn-danger"
-                  href="../team-head/annc-to-dept.html"
-                  id="ANNC-to-DEPT-btn"
+                ><a
+                  class="btn btn-outline-success"
+                  href="../team-head/ancmt-to-dept.html"
+                  id="ancmt-to-DEPT-btn"
                   >Announce to your Department</a
+                ><a
+                  class="btn btn-outline-secondary"
+                  href="../team-head/ancmt-to-team.html"
+                  id="ancmt-to-DEPT-btn"
+                  >Announce to your Team</a
                 >
               </div>
             </div>
-            <div id="annc-holder"></div>
+            <div id="ancmt-holder"></div>
           </section>
           <section id="weather" class="col-md">
             <h4>Weather</h4>
@@ -93,7 +90,16 @@
       aria-labelledby="menu-offcanvas"
     >
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Menu</h5>
+        <h1 class="offcanvas-title">Menu</h1>
+        <div class="btn-container">
+          <a
+            class="btn btn-outline-primary"
+            href="../hr/register.html"
+            id="register-btn"
+            >Register</a
+          >
+          <a class="btn btn-outline-primary">Logout</a>
+        </div>
       </div>
       <div class="offcanvas-body">
         <ul class="nav nav-pills flex-column">

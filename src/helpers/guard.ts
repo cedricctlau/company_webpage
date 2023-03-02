@@ -13,50 +13,13 @@ export const loginGuard = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export const teamHeadGuard = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    if (!req.session.staff?.is_team_head) {
-      throw new Error(`Team Head Guard: failed`);
-    }
-    next();
-  } catch (error) {
-    myErrorHandler(error, req, res);
-  }
-};
-
-export const hrGuard = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    if (!req.session.staff?.is_hr) {
-      throw new Error("HR Guard: failed");
-    }
-    next();
-  } catch (error) {
-    myErrorHandler(error, req, res);
-  }
-};
-
-export const adminGuard = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    if (req.session.staff?.id !== 1) {
-      throw new Error("Admin Guard: failed");
-    }
-    next();
-  } catch (error) {
-    myErrorHandler(error, req, res);
-  }
-};
-
 export const redirectMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    if (req.session.staff) {
+    if (req.session.staff_id && req.session.priv) {
       res.redirect("/dashboard.html");
       return;
     }

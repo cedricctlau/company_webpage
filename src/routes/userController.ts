@@ -11,20 +11,20 @@ export default class UserController {
 
   login = async (req: Request, res: Response): Promise<void> => {
     try {
-      if (req.session.staff) {
+      if (req.session.staff_id && req.session.priv) {
         res.redirect(`dashboard.html`);
         return;
       }
       const { username, password } = req.body;
-      const local = username.substring(0, username.search("@"));
       const hashed_pw = await this.hashPassword(password);
-      const json = await this.s.login(local, hashed_pw);
-      if (json.success) {
-        const { id, nickname, is_hr, is_team_head } = json.outcome;
-        req.session.staff = { id, nickname, is_hr, is_team_head };
+      const json = await this.s.login(username, hashed_pw);
+      if (!json.success) {
+        res.json(json);
+        return;
       }
-      res.json(json);
+      req.session = json.outcome;
       res.redirect(`dashboard.html`);
+      res.json(json);
     } catch (error) {
       this.errorHandler(error, req, res);
     }
@@ -44,26 +44,39 @@ export default class UserController {
 
   changePW = async (req: Request, res: Response): Promise<void> => {
     try {
-      if (!req.session.staff) {
+      if (!req.session.staff_id || !req.session.priv) {
         res.redirect(`index.html`);
         return;
       }
-      const id = req.session.staff.id;
+      const staff_id = req.session.staff_id;
       const hashed_pw = await this.hashPassword(req.body.password);
-      const json = await this.s.changePW(id, hashed_pw);
+      const json = await this.s.changePW(staff_id, hashed_pw);
       res.json(json);
     } catch (error) {
       this.errorHandler(error, req, res);
     }
   };
 
-  getProfile = async (req: Request, res: Response): Promise<void> => {
+  // getProfile = async (req: Request, res: Response): Promise<void> => {
+  //   try {
+  //     if (!req.session.staff) {
+  //       throw new Error(`!req.session.staff`);
+  //     }
+  //     const id = req.session.staff.id;
+  //     const json = await this.s.getAllProfiles(id);
+  //     res.json(json);
+  //   } catch (error) {
+  //     this.errorHandler(error, req, res);
+  //   }
+  // };
+
+  getNickname = async (req: Request, res: Response): Promise<void> => {
     try {
-      if (!req.session.staff) {
-        throw new Error(`!req.session.staff`);
+      if (!req.session.staff_id || !req.session.priv) {
+        throw new Error(`!req.session.staff_id || !req.session.priv`);
       }
-      const id = req.session.staff.id;
-      const json = await this.s.getProfile(id);
+      const staff_id = req.session.staff_id;
+      const json = await this.s.getNickname(staff_id);
       res.json(json);
     } catch (error) {
       this.errorHandler(error, req, res);
@@ -72,11 +85,11 @@ export default class UserController {
 
   checkPrivilege = async (req: Request, res: Response): Promise<void> => {
     try {
-      if (!req.session.staff) {
-        throw new Error(`!req.session.staff`);
+      if (!req.session.staff_id || !req.session.priv) {
+        throw new Error(`!req.session.staff_id || !req.session.priv`);
       }
-      const { is_team_head, is_hr } = req.session.staff;
-      const json = { success: true, outcome: { is_team_head, is_hr } };
+      const priv = req.session.priv;
+      const json = { success: true, outcome: { priv } };
       res.json(json);
     } catch (error) {
       this.errorHandler(error, req, res);

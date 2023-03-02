@@ -1,6 +1,9 @@
 import type { Knex } from "knex";
+import Priv from "../models/priv";
+import Profile from "../models/profile";
 import Reply from "../models/reply";
-import Staff, { StaffProfile } from "../models/staff";
+import Staff from "../models/staff";
+import Title from "../models/title";
 
 export default class UserService {
   constructor(
@@ -8,54 +11,52 @@ export default class UserService {
     private checkPassword: (a: string, b: string) => Promise<boolean>
   ) {}
 
-  login = async (local: string, hashed_pw: string): Promise<Reply> => {
-    const queryResult = await this.knex<Staff>("staffs")
-      .select("id", "local", "hashed_pw", "nickname", "is_hr", "is_team_head")
-      .where("local", local);
+  login = async (username: string, hashed_pw: string): Promise<Reply> => {
+    const queryResult = await this.knex<Staff>("staffs as s")
+      .select(
+        "id",
+        "username",
+        "hashed_pw",
+        "priv_all",
+        "priv_dept",
+        "priv_team",
+        "priv_private"
+      )
+      .where("username", username);
     if (!queryResult.length) {
-      return { success: true, message: "No such username" };
+      return { success: true, message: "Incorrect username" };
     }
     const staff = queryResult[0];
     const checkPassword = await this.checkPassword(staff.hashed_pw, hashed_pw);
     if (!checkPassword) {
       return { success: true, message: "Incorrect password" };
     }
-    const { id, nickname, is_hr, is_team_head } = staff;
-    return { success: true, outcome: { id, nickname, is_hr, is_team_head } };
+    const { id, priv_all, priv_dept, priv_team, priv_private } = staff;
+    const priv: Priv = { priv_all, priv_dept, priv_team, priv_private };
+    return { success: true, outcome: { id, priv } };
   };
 
-  changePW = async (id: number, hashed_pw: string): Promise<Reply> => {
+  changePW = async (staff_id: number, hashed_pw: string): Promise<Reply> => {
     await this.knex<Staff>("staffs")
-      .where("id", id)
+      .where("id", staff_id)
       .update({ hashed_pw })
       .returning("id");
     return { success: true };
   };
 
-  getProfile = async (id: number): Promise<Reply> => {
-    const profileQry = await this.knex<Staff>("staffs")
-      .where({ id })
+  getNickname = async (staff_id: number): Promise<Reply> => {
+    const queryResult = await this.knex<Profile>("profiles")
+      .select("nickname")
+      .where("staff_id", staff_id);
+    const nickname = queryResult[0].nickname;
+    return { success: true, outcome: { nickname } };
+  };
+
+  getAllProfiles = async (): Promise<Reply> => {
+    const profiles = await this.knex<Staff>("staffs as s")
+      .leftJoin<Profile>("profiles as p", "s.profile_id", "p.id")
+      .leftJoin<Title>("titles as t", "p.title_id", "t.id")
       .select("*");
-    const {
-      nickname,
-      first_name,
-      last_name,
-      gender,
-      tel,
-      is_hr,
-      is_team_head,
-      title_id,
-    } = profileQry[0];
-    const profile: StaffProfile = {
-      nickname,
-      first_name,
-      last_name,
-      gender,
-      tel,
-      is_hr,
-      is_team_head,
-      title_id,
-    };
-    return { success: true, outcome: { profile } };
+    return { success: true, outcome: { profiles } };
   };
 }
