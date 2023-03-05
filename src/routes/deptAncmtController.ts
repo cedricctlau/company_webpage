@@ -1,50 +1,45 @@
 import { Request, Response } from "express";
 import "../helpers/session";
-import AnnouncementService from "./announcementService";
+import DeptAncmtService from "./deptAncmtService";
 
-class AnnouncementController {
+class DeptAncmtController {
 	constructor(
-		private s: AnnouncementService,
+		private s: DeptAncmtService,
 		private errorHandler: (e: any, req: Request, res: Response) => void
 	) {}
 
-	getAnnouncements = async (req: Request, res: Response): Promise<void> => {
+	getDeptList = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const staff_id = req.session.staff?.id as number;
-			const json = await this.s.getAnnouncements(staff_id);
+			const json = await this.s.getDeptList(staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 
-	announceToAll = async (req: Request, res: Response): Promise<void> => {
+	getDeptAncmts = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const staff_id = req.session.staff?.id as number;
-			const { content } = req.body;
-			const json = await this.s.announceToAll(staff_id, content);
+			const json = await this.s.getDeptAncmts(staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 
-	announceToDepartment = async (req: Request, res: Response): Promise<void> => {
+	createDeptAncmt = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const staff_id = req.session.staff?.id as number;
-			const { department_id, content } = req.body;
-			const json = await this.s.announceToDepartment(
-				staff_id,
-				content,
-				department_id
-			);
+			const { dept_id, content } = req.body;
+			const json = await this.s.createDeptAncmt(staff_id, content, dept_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 
-	editAnnouncement = async (req: Request, res: Response): Promise<void> => {
+	editDeptAncmt = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const id = parseInt(req.params.id);
 			const staff_id = req.session.staff?.id as number;
@@ -55,22 +50,24 @@ class AnnouncementController {
 				);
 			}
 			const { content } = req.body;
-			const json = await this.s.editAnnouncement(id, content, staff_id);
+			const json = await this.s.editDeptAncmt(id, content, staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 
-	delAnnouncement = async (req: Request, res: Response): Promise<void> => {
+	delDeptAncmt = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const ancmt_id = parseInt(req.params.id);
 			const staff_id = req.session.staff?.id as number;
-			const owner_id  = req.body.id as number;
-			if (staff_id !== owner_id){
-				throw new Error (`This hacker tried to del an announcement owned by others`)
+			const owner_id = req.body.id as number;
+			if (staff_id !== owner_id) {
+				throw new Error(
+					`This hacker tried to del an announcement owned by others`
+				);
 			}
-			const json = await this.s.delAnnouncement(ancmt_id, staff_id);
+			const json = await this.s.delDeptAncmt(ancmt_id, staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
@@ -78,4 +75,4 @@ class AnnouncementController {
 	};
 }
 
-export default AnnouncementController
+export default DeptAncmtController;

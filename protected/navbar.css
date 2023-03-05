@@ -1,8 +1,18 @@
-.navbar-brand {
-	font-size: 30px;
-	padding-left: 1vw;
-}
-
 .navbar-brand > span {
 	margin: 0px 8px;
+	font-family: cursive;
+}
+
+.welcome {
+	color: azure;
+	padding: 0.375rem 0.75rem;
+}
+
+.holder {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.navbar-toggler {
+	background-color: grey
 }
