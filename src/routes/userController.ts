@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import UserService from "./userService";
 import "../helpers/session";
 import Priv from "../models/priv";
-import { LargeNumberLike } from "crypto";
 
 export default class UserController {
 	constructor(
@@ -20,7 +19,9 @@ export default class UserController {
 				res.json(json);
 				return;
 			}
-			req.session = json.outcome;
+			const staff = json.outcome.staff;
+			req.session.staff = { id: staff.id, priv: staff.priv };
+			res.json(json);
 			return res.redirect(`dashboard.html`);
 		} catch (error) {
 			this.errorHandler(error, req, res);
@@ -42,18 +43,19 @@ export default class UserController {
 	changePW = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const staff_id = req.session.staff?.id as number;
-			const hashed_pw = await this.hashPassword(req.body.password);
-			const json = await this.s.changePW(staff_id, hashed_pw);
+			const hashed_pw = await this.hashPassword(req.body.new_pw);
+			const hashed_old_pw = await this.hashPassword(req.body.old_pw);
+			const json = await this.s.changePW(staff_id, hashed_pw, hashed_old_pw);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
 	};
 
-	getProfile = async (req: Request, res: Response): Promise<void> => {
+	getSelfProfile = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const staff_id = req.session.staff?.id as number;
-			const json = await this.s.getProfile(staff_id);
+			const json = await this.s.getSelfProfile(staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);
@@ -73,16 +75,6 @@ export default class UserController {
 		try {
 			const priv = req.session.staff?.priv as Priv;
 			const json = { success: true, outcome: { priv } };
-			res.json(json);
-		} catch (error) {
-			this.errorHandler(error, req, res);
-		}
-	};
-
-	getNickname = async (req: Request, res: Response) => {
-		try {
-			const staff_id = req.session.staff?.id as number;
-			const json = await this.s.getNickname(staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);

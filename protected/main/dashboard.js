@@ -1,215 +1,220 @@
-import { hideBtn, loadWelcome } from "../navbar";
-import { loadWelcome } from "../navbar";
-import "../navbar";
+import { loadNavBar } from "../navbar";
 
 window.onload(async () => {
-	await loadWelcome();
+	await loadNavBar();
 	await hideBtn();
 	await loadPublicAncmt();
 	await loadDeptAncmt();
 	await loadTeamAncmt();
 	await updateDeptList();
 	await updateTeamList();
+	regAJAXEventListeners();
 });
 
-document
-	.querySelector("#public-ancmt-submit-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const content = document.querySelector("#public-ancmt-content").value;
-		if (!content) {
-			alert(`Please insert announcement content!`);
-			return;
-		}
-		const res = await fetch(`/createPublicAncmt`, { body: { content } });
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when creating announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert("Announcement created!");
-		document.querySelector("#public-ancmt-content").value = "";
-	});
-
-document
-	.querySelector("#dept-ancmt-submit-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const dept_id = parseInt(document.querySelector("#dept-select").value);
-		const content = document.querySelector("#dept-ancmt-content").value;
-		if (!dept_id) {
-			alert(`Please choose a target department!`);
-			return;
-		}
-		if (!content) {
-			alert(`Please insert announcement content!`);
-			return;
-		}
-		const res = await fetch(`/createDeptAncmt`, { body: { dept_id, content } });
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when creating announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert(`Announcement created!`);
-		document.querySelector("#dept-select").value = "";
-		document.querySelector("#dept-ancmt-content").value = "";
-	});
-
-document
-	.querySelector("#team-ancmt-submit-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const team_id = parseInt(document.querySelector("#team-select").value);
-		const content = document.querySelector("#team-ancmt-content").value;
-		if (!team_id) {
-			alert(`Please choose a target team!`);
-			return;
-		}
-		if (!content) {
-			alert(`Please insert announcement content!`);
-			return;
-		}
-		const res = await fetch(`/createTeamAncmt`, {
-			body: { team_id, content },
+function regAJAXEventListeners() {
+	document
+		.querySelector("#public-ancmt-submit-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const content = document.querySelector("#public-ancmt-content").value;
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const res = await fetch(`/createPublicAncmt`, { body: { content } });
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when creating announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement created!");
+			document.querySelector("#public-ancmt-content").value = "";
 		});
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when creating announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert(`Announcement created!`);
-		document.querySelector("#team-select").value = "";
-		document.querySelector("#team-ancmt-content").value = "";
-	});
 
-document
-	.querySelector("#edit-public-ancmt-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const content = document.querySelector("#edit-public-ancmt-content").value;
-		if (!content) {
-			alert(`Please insert announcement content!`);
-			return;
-		}
-		const id = document.querySelector("#edit-public-ancmt-content").dataset.id;
-		const res = await fetch(`/editPublicAncmt/${id}`, { body: { content } });
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert("Announcement edited!");
-		document.querySelector("#edit-public-ancmt-content").value = "";
-		await loadPublicAncmt();
-	});
-
-document
-	.querySelector("#edit-dept-ancmt-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const content = document.querySelector("#edit-dept-ancmt-content").value;
-		if (!content) {
-			alert(`Please insert announcement content!`);
-			return;
-		}
-		const id = document.querySelector("#edit-dept-ancmt-content").dataset.id;
-		const res = await fetch(`/editDeptAncmt/${id}`, { body: { content } });
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert("Announcement edited!");
-		document.querySelector("#edit-dept-ancmt-content").value = "";
-		await loadDeptAncmt();
-	});
-
-document
-	.querySelector("#edit-team-ancmt-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const content = document.querySelector("#edit-team-ancmt-content").value;
-		if (!content) {
-			alert(`Please insert announcement content!`);
-			return;
-		}
-		const id = document.querySelector("#edit-team-ancmt-content").dataset.id;
-		const res = await fetch(`/editTeamAncmt/${id}`, {
-			body: { content },
+	document
+		.querySelector("#dept-ancmt-submit-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const dept_id = parseInt(document.querySelector("#dept-select").value);
+			const content = document.querySelector("#dept-ancmt-content").value;
+			if (!dept_id) {
+				alert(`Please choose a target department!`);
+				return;
+			}
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const res = await fetch(`/createDeptAncmt`, {
+				body: { dept_id, content },
+			});
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when creating announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert(`Announcement created!`);
+			document.querySelector("#dept-select").value = "";
+			document.querySelector("#dept-ancmt-content").value = "";
 		});
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert("Announcement edited!");
-		document.querySelector("#edit-team-ancmt-content").value = "";
-		await loadTeamAncmt();
-	});
 
-document
-	.querySelector("#del-public-ancmt-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const id = document.querySelector("#del-public-ancmt-content").dataset.id;
-		const res = await fetch(`/delPublicAncmt/${id}`, { body: { content } });
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert("Announcement deleted!");
-		await loadPublicAncmt();
-	});
+	document
+		.querySelector("#team-ancmt-submit-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const team_id = parseInt(document.querySelector("#team-select").value);
+			const content = document.querySelector("#team-ancmt-content").value;
+			if (!team_id) {
+				alert(`Please choose a target team!`);
+				return;
+			}
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const res = await fetch(`/createTeamAncmt`, {
+				body: { team_id, content },
+			});
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when creating announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert(`Announcement created!`);
+			document.querySelector("#team-select").value = "";
+			document.querySelector("#team-ancmt-content").value = "";
+		});
 
-document
-	.querySelector("#del-dept-ancmt-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const id = document.querySelector("#del-dept-ancmt-content").dataset.id;
-		const res = await fetch(`/delDeptAncmt/${id}`, { body: { content } });
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert("Announcement deleted!");
-		await loadDeptAncmt();
-	});
+	document
+		.querySelector("#edit-public-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const content = document.querySelector(
+				"#edit-public-ancmt-content"
+			).value;
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const id = document.querySelector("#edit-public-ancmt-content").dataset
+				.id;
+			const res = await fetch(`/editPublicAncmt/${id}`, { body: { content } });
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement edited!");
+			document.querySelector("#edit-public-ancmt-content").value = "";
+			await loadPublicAncmt();
+		});
+	document
+		.querySelector("#del-public-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const id = document.querySelector("#del-public-ancmt-content").dataset.id;
+			const res = await fetch(`/delPublicAncmt/${id}`, { body: { content } });
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement deleted!");
+			await loadPublicAncmt();
+		});
 
-document
-	.querySelector("#del-team-ancmt-btn")
-	.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const id = document.querySelector("#del-team-ancmt-content").dataset.id;
-		const res = await fetch(`/delTeamAncmt/${id}`, { body: { content } });
-		const json = await res.json();
-		if (!json.success) {
-			alert(
-				`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
-			);
-			return;
-		}
-		alert("Announcement deleted!");
-		await loadTeamAncmt();
-	});
+	document
+		.querySelector("#edit-dept-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const content = document.querySelector("#edit-dept-ancmt-content").value;
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const id = document.querySelector("#edit-dept-ancmt-content").dataset.id;
+			const res = await fetch(`/editDeptAncmt/${id}`, { body: { content } });
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement edited!");
+			document.querySelector("#edit-dept-ancmt-content").value = "";
+			await loadDeptAncmt();
+		});
+
+	document
+		.querySelector("#del-dept-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const id = document.querySelector("#del-dept-ancmt-content").dataset.id;
+			const res = await fetch(`/delDeptAncmt/${id}`, { body: { content } });
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement deleted!");
+			await loadDeptAncmt();
+		});
+
+	document
+		.querySelector("#edit-team-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const content = document.querySelector("#edit-team-ancmt-content").value;
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const id = document.querySelector("#edit-team-ancmt-content").dataset.id;
+			const res = await fetch(`/editTeamAncmt/${id}`, {
+				body: { content },
+			});
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement edited!");
+			document.querySelector("#edit-team-ancmt-content").value = "";
+			await loadTeamAncmt();
+		});
+
+	document
+		.querySelector("#del-team-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const id = document.querySelector("#del-team-ancmt-content").dataset.id;
+			const res = await fetch(`/delTeamAncmt/${id}`, { body: { content } });
+			const json = await res.json();
+			if (!json.success) {
+				alert(
+					`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement deleted!");
+			await loadTeamAncmt();
+		});
+}
 
 async function hideBtn() {
 	const res = await fetch("/getPriv");
@@ -221,6 +226,10 @@ async function hideBtn() {
 		return;
 	}
 	const priv = json.outcome.priv;
+
+	if (!priv.priv_all && !priv.priv_dept && !priv.priv_team) {
+		document.querySelector("#add-ancmt-modals-btn").setAttribute("hidden");
+	}
 
 	if (!priv.priv_all) {
 		document.querySelector("#public-modal-btn").setAttribute("hidden");

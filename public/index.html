@@ -1,81 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Candy | DashBoard</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <nav class="navbar bg-dark" data-bs-theme="dark">
-      <div class="container-fluid">
-        <div></div>
-        <a class="navbar-brand" href="index.html">
-          <i class="fa-solid fa-candy-cane"></i>
-          Candy Int. Ltd.
-        </a>
-        <div></div>
-      </div>
-    </nav>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Candy | DashBoard</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+			integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<link rel="stylesheet" href="index.css" />
+	</head>
+	<body>
+		<nav class="navbar bg-dark" data-bs-theme="dark">
+			<div class="container-fluid">
+				<div></div>
+				<a class="navbar-brand" href="index.html">
+					<i class="fa-solid fa-candy-cane"></i>
+					Candy Int. Ltd.
+				</a>
+				<div></div>
+			</div>
+		</nav>
 
-    <main>
-      <section id="form-holder">
-        <form action="/login" method="POST" id="login-form">
-          <h5 class="welcome">Welcome to Candy's DashBoard</h5>
-          <div>
-            <div class="label">Username:</div>
-            <div>
-              <input
-                type="text"
-                name="username"
-                placeholder="local@candy.io"
-                required
-              />
-            </div>
-          </div>
-          <div>
-            <div class="label">Password:</div>
-            <input
-              type="password"
-              name="password"
-              placeholder="Input your password here"
-              required
-            />
-          </div>
-          <div class="warning" hidden>
-            Incorrect username / password ! Please try again !
-          </div>
-          <div>
-            <input
-              class="btn btn-success"
-              type="submit"
-              value="Login"
-              id="login-btn"
-            />
-          </div>
-        </form>
-      </section>
-    </main>
+		<main>
+			<section id="form-holder">
+				<form action="/login" method="POST" id="login-form">
+					<h5 class="welcome">Welcome to Candy's DashBoard</h5>
+					<div>
+						<div class="label">Username:</div>
+						<div>
+							<input
+								id="username"
+								type="text"
+								name="username"
+								placeholder="local@candy.io"
+								required
+							/>
+						</div>
+					</div>
+					<div>
+						<div class="label">Password:</div>
+						<input
+							id="password"
+							type="password"
+							name="password"
+							placeholder="Input your password here"
+							required
+						/>
+					</div>
+					<div class="warning" hidden>
+						Incorrect username / password ! Please try again !
+					</div>
+					<div>
+						<input
+							class="btn btn-success"
+							type="submit"
+							value="Login"
+							id="login-btn"
+						/>
+					</div>
+				</form>
+			</section>
+		</main>
 
-    <script src="./index.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+		<script src="./index.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+			crossorigin="anonymous"
+		></script>
+	</body>
 </html>

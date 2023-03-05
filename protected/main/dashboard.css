@@ -1,3 +1,5 @@
+@import "../navbar.css";
+
 #public-ancmt-section {
 	margin: 2vh 1.3vw;
 	border: 5px solid gray;

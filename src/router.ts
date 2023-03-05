@@ -34,12 +34,12 @@ deptAncmtRoute.post("/createDeptAncmt", c2.createDeptAncmt);
 deptAncmtRoute.put("/editDeptAncmt/:id", c2.editDeptAncmt);
 deptAncmtRoute.delete("/delDeptAncmt/:id", c2.delDeptAncmt);
 
-export const hrRoute = Router();
-const s3 = new HRService(myKnex);
-const c3 = new HRController(s3, hashPassword, myErrorHandler);
-hrRoute.get("/createLocal", c3.createLocal);
-hrRoute.put("/register", c3.register);
-hrRoute.put("/changeProfile", c3.changeProfile);
+// export const hrRoute = Router();
+// const s3 = new HRService(myKnex);
+// const c3 = new HRController(s3, hashPassword, myErrorHandler);
+// hrRoute.get("/createLocal", c3.createLocal);
+// hrRoute.put("/register", c3.register);
+// hrRoute.put("/changeProfile", c3.changeProfile);
 
 export const publicAncmtRoute = Router();
 const s4 = new PublicAncmtService(myKnex);
@@ -63,7 +63,6 @@ const c6 = new UserController(s6, hashPassword, myErrorHandler);
 userRoute.get("/login", c6.login);
 userRoute.get("/logout", c6.logout);
 userRoute.put("/changePW", c6.changePW);
-userRoute.get("/getProfile", c6.getProfile);
+userRoute.get("/getSelfProfile", c6.getSelfProfile);
 userRoute.get("/getAllProfiles", c6.getAllProfiles);
 userRoute.get("/getPriv", c6.getPriv);
-userRoute.get("/getNickname", c6.getNickname);

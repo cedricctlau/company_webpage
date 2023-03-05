@@ -1,0 +1,41 @@
+@import "../navbar.css";
+
+#directory-container {
+	padding: 10px;
+	display: flex;
+}
+
+.directory {
+	border: double 3px grey;
+	width: 500px;
+	height:250px;
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 180px auto;
+}
+
+.propic {
+	width: 150px;
+	padding-top: 10px;
+}
+
+.directory-body {
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.label {
+	color: #aaaaaa;
+	font-size: 10px;
+}
+
+.content {
+	text-align: center;
+	font-family: "Courier New", Courier, monospace;
+}
+
+.propic-holder{
+	align-self: center;
+}

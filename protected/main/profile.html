@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Candy | DashBoard</title>
+		<title>Candy | My Profile</title>
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 			rel="stylesheet"
@@ -18,73 +18,207 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		/>
-		<link rel="stylesheet" href="./dashboard.css" />
-		<link rel="stylesheet" href="../navbar.css" />
+		<link rel="stylesheet" href="./profile.css" />
 	</head>
 	<body>
-		<nav class="navbar bg-dark" data-bs-theme="dark">
+		<nav class="navbar navbar-expand-md bg-dark" data-bs-theme="dark">
 			<div class="container-fluid">
-				<section class="btn-container">
-					<button
-						class="btn btn-outline-light"
-						data-bs-toggle="offcanvas"
-						data-bs-target="#menu-offcanvas"
-					>
-						<i class="fa-solid fa-bars"></i>
-					</button>
-				</section>
-				<a class="navbar-brand" href="index.html"
+				<a class="navbar-brand" href="../../public/index.html"
 					><span><i class="fa-solid fa-candy-cane"></i></span
 					><span>Candy</span></a
 				>
-
-				<section class="btn-container">
-					<a
-						class="btn btn-outline-light"
-						href="register.html"
-						id="register-btn"
-						>Register</a
-					>
-					<a class="btn btn-outline-light">Logout</a>
-				</section>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="dashboard.html">Dashboard</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="attendance.html">My Attendance</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="directory.html">Staff Directory</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link admin" href="../admin/admin_portal.html"
+								>Admin Portal</a
+							>
+						</li>
+					</ul>
+					<div class="holder">
+						<a id="welcome" href="./profile.html"
+							><div>
+								<img id="icon" src="../../uploads/5e843ef35ad6e.jpg" />
+							</div>
+							<div id="mini-profile">Andrew (andrewbbshek@candy.io)</div>
+						</a>
+						<div class="dropdown">
+							<button
+								class="btn btn-secondary dropdown-toggle"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								<i class="fa-solid fa-temperature-half"></i>
+							</button>
+							<table class="dropdown-menu" id="weather-dropdown">
+								<tr>
+									<td>Temperature:</td>
+									<td>20°C</td>
+								</tr>
+								<tr>
+									<td>Humidity</td>
+									<td>30%</td>
+								</tr>
+								<tr>
+									<td>Rainfall:</td>
+									<td>0mm</td>
+								</tr>
+								<tr>
+									<td colspan="2">Warning Message:</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<ul>
+											<li>
+												The Fire Danger Warning is Red and the fire risk is
+												extreme.
+											</li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<a id="logout-btn" class="btn btn-secondary">
+							<i class="fa-solid fa-arrow-right-from-bracket"></i>
+						</a>
+					</div>
+				</div>
 			</div>
 		</nav>
 
 		<main>
-            
+			<div class="flex-container">
+				<div id="profile-container">
+					<section id="front">
+						<div class="profile" data-id="1">
+							<img class="propic" src="../../uploads/5e843ef35ad6e.jpg" />
+							<div class="directory-body">
+								<div class="label">Familiar Name</div>
+								<div class="content">Andrew</div>
+								<div class="label">First Name</div>
+								<div class="content">Big Boss</div>
+								<div class="label">Last Name</div>
+								<div class="content">Shek</div>
+								<div class="label">Gender</div>
+								<div class="content">M</div>
+								<div class="label">Title</div>
+								<div class="content">Chief Executive Officer</div>
+								<div class="label">Tel</div>
+								<div class="content">23800000</div>
+								<div class="label">Email</div>
+								<div class="content">andrewbbshek@candy.io</div>
+							</div>
+						</div>
+					</section>
+					<section id="back">
+						<div id="personal-info">
+							<div class="disclaimer">
+								&lt;This confidential section is only accessible by HR
+								Department&gt;
+							</div>
+							<div class="label">HKID</div>
+							<div class="content">A123456(7)</div>
+							<div class="label">Date of Birth</div>
+							<div class="content">2023-03-02</div>
+							<div class="label">Address</div>
+							<div class="content">
+								Candy Int. Ltd., 20B, TML Tower, 3 Hoi Shing Rd, Tsuen Wan
+							</div>
+							<div class="label">Bank Account</div>
+							<div class="content">000000000000000</div>
+							<div class="label">Monthly Salary</div>
+							<div class="content">$10970.00</div>
+						</div>
+					</section>
+				</div>
+				<button
+					class="btn btn-success"
+					data-bs-toggle="modal"
+					data-bs-target="#changePasswordModal"
+				>
+					Change Password
+				</button>
+			</div>
 		</main>
 
-		<aside
-			class="offcanvas offcanvas-start"
-			data-bs-scroll="false"
-			data-bs-backdrop="true"
+		<section
+			class="modal fade"
+			id="changePasswordModal"
 			tabindex="-1"
-			id="menu-offcanvas"
-			aria-labelledby="menu-offcanvas"
+			aria-labelledby="changePasswordModalLabel"
+			aria-hidden="true"
 		>
-			<div class="offcanvas-header">
-				<h5 class="offcanvas-title">Menu</h5>
-			</div>
-			<div class="offcanvas-body">
-				<ul class="nav nav-pills flex-column">
-					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="dashboard.html"
-							>Dashboard</a
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="changeModalLabel">
+							Change Password
+						</h1>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<table>
+							<tr>
+								<td>Enter Original Password:</td>
+								<td><input type="password" id="originalPW" /></td>
+							</tr>
+							<tr>
+								<td>Enter New Password:</td>
+								<td><input type="password" id="newPW" /></td>
+							</tr>
+							<tr>
+								<td>Re-enter New Password:</td>
+								<td><input type="password" id="newPW2" /></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-bs-dismiss="modal"
 						>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" href="profile.html">My Profile</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="directory.html">Directory</a>
-					</li>
-				</ul>
+							Close
+						</button>
+						<button type="button" class="btn btn-primary" id="changePW-btn">
+							Save changes
+						</button>
+					</div>
+				</div>
 			</div>
-		</aside>
+		</section>
+
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 			crossorigin="anonymous"
 		></script>
+		<script type="module" src="./profile.js"></script>
 	</body>
 </html>
