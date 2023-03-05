@@ -6,8 +6,6 @@ import AdminController from "./routes/adminController";
 import AdminService from "./routes/adminService";
 import PublicAncmtController from "./routes/publicAncmtController";
 import PublicAncmtService from "./routes/publicAncmtService";
-import HRController from "./routes/hrController";
-import HRService from "./routes/hrService";
 import UserController from "./routes/userController";
 import UserService from "./routes/userService";
 import DeptAncmtController from "./routes/deptAncmtController";

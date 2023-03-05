@@ -4,11 +4,11 @@ document
 		event.preventDefault();
 		const username = document.querySelector("#username").value;
 		const password = document.querySelector("#password").value;
-		const res = await fetch("/login", {
+    const res = await fetch("/login", {
 			method: "POST",
 			body: { username, password },
 		});
-		const json = res.json();
+		const json = await res.json();
 		if (json.success && !json.message) {
 			console.log("wrong!!!");
 			return;
