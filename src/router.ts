@@ -28,7 +28,7 @@ adminRoute.put("/editTeam/:id", c1.editTeam);
 export const deptAncmtRoute = Router();
 const s2 = new DeptAncmtService(myKnex);
 const c2 = new DeptAncmtController(s2, myErrorHandler);
-deptAncmtRoute.get("/getDeptList",c2.getDeptList)
+deptAncmtRoute.get("/getDeptList", c2.getDeptList);
 deptAncmtRoute.get("/getDeptAncmts", c2.getDeptAncmts);
 deptAncmtRoute.post("/createDeptAncmt", c2.createDeptAncmt);
 deptAncmtRoute.put("/editDeptAncmt/:id", c2.editDeptAncmt);
@@ -66,3 +66,4 @@ userRoute.put("/changePW", c6.changePW);
 userRoute.get("/getProfile", c6.getProfile);
 userRoute.get("/getAllProfiles", c6.getAllProfiles);
 userRoute.get("/getPriv", c6.getPriv);
+userRoute.get("/getNickname", c6.getNickname);

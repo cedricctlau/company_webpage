@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import UserService from "./userService";
 import "../helpers/session";
 import Priv from "../models/priv";
+import { LargeNumberLike } from "crypto";
 
 export default class UserController {
 	constructor(
@@ -72,6 +73,16 @@ export default class UserController {
 		try {
 			const priv = req.session.staff?.priv as Priv;
 			const json = { success: true, outcome: { priv } };
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	getNickname = async (req: Request, res: Response) => {
+		try {
+			const staff_id = req.session.staff?.id as number;
+			const json = await this.s.getNickname(staff_id);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);

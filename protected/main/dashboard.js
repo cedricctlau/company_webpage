@@ -1,6 +1,9 @@
-import { hideBtn } from "../navbar";
+import { hideBtn, loadWelcome } from "../navbar";
+import { loadWelcome } from "../navbar";
+import "../navbar";
 
 window.onload(async () => {
+	await loadWelcome();
 	await hideBtn();
 	await loadPublicAncmt();
 	await loadDeptAncmt();

@@ -59,4 +59,12 @@ export default class UserService {
 			.select("*");
 		return { success: true, outcome: { profiles } };
 	};
+
+	getNickname = async (staff_id: number): Promise<Reply> => {
+		const queryResult = await this.knex<Profile>("profiles")
+			.select("nickname")
+			.where("staff_id", staff_id);
+		const nickname = queryResult[0].nickname;
+		return { success: true, outcome: { nickname } };
+	};
 }
