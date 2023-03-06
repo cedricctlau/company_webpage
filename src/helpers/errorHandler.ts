@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 interface ErrorLog {
 	success: boolean;
-	error: { statusCode: number | undefined; message: string };
+	error: { method:string,path: string; statusCode: number | undefined; message: string };
 }
 
 export default function myErrorHandler(e: any, req: Request, res: Response) {
@@ -16,11 +16,13 @@ export default function myErrorHandler(e: any, req: Request, res: Response) {
 	const errorLog: ErrorLog = {
 		success: false,
 		error: {
+			method: req.method,
+			path: req.body.path,
 			statusCode: req.statusCode,
 			message: e.message,
 		},
 	};
-	console.error(e);
+	console.log(errorLog);
 	if (!res.headersSent) {
 		res.json(errorLog);
 	}

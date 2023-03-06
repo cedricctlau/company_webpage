@@ -62,7 +62,7 @@ export default class UserService {
 	};
 
 	getSelfProfile = async (staff_id: number): Promise<Reply> => {
-		const queryResult = await this.knex<Staff>("staffs as s")
+		const jointRows = await this.knex<Staff>("staffs as s")
 			.leftJoin<Profile>("profiles as p", "s.profile_id", "p.id")
 			.leftJoin<Title>("titles as t", "p.title_id", "t.id")
 			.leftJoin<PersonalInfo>(
@@ -72,12 +72,12 @@ export default class UserService {
 			)
 			.select("s.id as staff_id", "s.username", "p.*", "t.title", "pi.*")
 			.where("s.id", staff_id);
-		const profile = queryResult[0];
+		const profile = jointRows[0];
 		return { success: true, outcome: { profile } };
 	};
 
 	getAllProfiles = async (): Promise<Reply> => {
-		const queryResult = await this.knex<Staff>("staffs as s")
+		const jointRows = await this.knex<Staff>("staffs as s")
 			.leftJoin<Profile>("profiles as p", "s.profile_id", "p.id")
 			.leftJoin<Title>("titles as t", "p.title_id", "t.id")
 			.select("s.id as staff_id", "s.username", "p.*", "t.title")
@@ -87,7 +87,7 @@ export default class UserService {
 				{ column: "p.last_name" },
 				{ column: "t.title" },
 			]);
-		const profiles = queryResult.map((row) => {
+		const profiles = jointRows.map((row) => {
 			return {
 				staff_id: row.staff_id,
 				name: row.last_name + ", " + row.first_name + " (" + row.nickname + ")",

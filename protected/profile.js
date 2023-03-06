@@ -1,12 +1,10 @@
 import { loadNavBar } from "./navbar";
-import { resolve } from "path";
+
 
 window.onload(async () => {
-	await loadNavBar(uploadDir);
+	await loadNavBar();
 	await loadPage();
 });
-
-const uploadDir = resolve(__dirname + "/" + "../uploads");
 
 async function loadPage() {
 	const res = await fetch("/getSelfProfile");

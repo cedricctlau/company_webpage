@@ -1,11 +1,12 @@
 export default async function loadNavBar(uploadDir) {
-	await loadWelcome(uploadDir);
+	await loadWelcome();
 	await loadWeather();
 	regLogoutBtn();
 	adminPortal();
 }
 
-async function loadWelcome(uploadDir) {
+async function loadWelcome() {
+	const uploadDir = join(__dirname, "../uploads");
 	const res = await fetch("/getProfile");
 	const json = res.json();
 	if (!json.success) {

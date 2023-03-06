@@ -1,8 +1,8 @@
 import { loadNavBar } from "./navbar";
-import { resolve } from "path";
+
 
 window.onload(async () => {
-	await loadNavBar(uploadDir);
+	await loadNavBar();
 	await hideBtn();
 	await loadPublicAncmt();
 	await loadDeptAncmt();
@@ -11,8 +11,6 @@ window.onload(async () => {
 	await updateTeamList();
 	regAJAXEventListeners();
 });
-
-const uploadDir = resolve(__dirname + "/" + "../uploads");
 
 async function hideBtn() {
 	const res = await fetch("/getPriv");

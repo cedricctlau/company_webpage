@@ -10,20 +10,16 @@ export default class UserController {
 	) {}
 
 	login = async (req: Request, res: Response): Promise<void> => {
-		try {
-			const { username, password } = req.body;
-			const json = await this.s.login(username, password);
-			if (json.success && json.message) {
-				res.json(json);
-				return;
-			}
-			const staff = json.outcome.staff;
-			req.session.staff = { id: staff.id, priv: staff.priv };
-			console.log(req.session)
-			return res.redirect('dashboard.html')
-		} catch (error) {
-			this.errorHandler(error, req, res);
+		const { username, password } = req.body;
+		const json = await this.s.login(username, password);
+		if (json.success && json.message) {
+			res.json(json);
+			return;
 		}
+		const staff = json.outcome.staff;
+		req.session.staff = { id: staff.id, priv: staff.priv };
+		console.log(req.session);
+		res.redirect("dashboard.html");
 	};
 
 	logout = async (req: Request, res: Response): Promise<void> => {

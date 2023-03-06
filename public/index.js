@@ -11,12 +11,11 @@ document
 		});
 		const json = await res.json();
 		if (!json.success) {
-			console.log("Backend problem");
+			alert("Unexpected error when logging in!");
+			return
 		}
 		if (json.success && json.message) {
 			document.querySelector(".warning").removeAttribute("hidden");
 			return;
 		}
-		console.log(json.outcome.staff);
-		window.location("dashboard.html");
 	});
