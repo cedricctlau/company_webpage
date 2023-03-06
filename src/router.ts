@@ -56,9 +56,9 @@ teamAncmtRoute.put("/editTeamAncmt/:id", c5.editTeamAncmt);
 teamAncmtRoute.delete("/delTeamAncmt/:id", c5.delTeamAncmt);
 
 export const userRoute = Router();
-const s6 = new UserService(myKnex, checkPassword);
-const c6 = new UserController(s6, hashPassword, myErrorHandler);
-userRoute.get("/login", c6.login);
+const s6 = new UserService(myKnex, hashPassword, checkPassword);
+const c6 = new UserController(s6, myErrorHandler);
+userRoute.post("/login", c6.login);
 userRoute.get("/logout", c6.logout);
 userRoute.put("/changePW", c6.changePW);
 userRoute.get("/getSelfProfile", c6.getSelfProfile);

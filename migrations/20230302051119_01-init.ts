@@ -48,8 +48,7 @@ export async function up(knex: Knex): Promise<void> {
 			t.string("username").notNullable().unique();
 			t.string("hashed_pw").notNullable();
 			t.boolean("active").notNullable().defaultTo(true);
-			t.boolean("priv_all").notNullable();
-			t.boolean("priv_private").notNullable();
+			t.boolean("is_admin").notNullable();
 			t.timestamps(false, true);
 			t.integer("profile_id").notNullable().unsigned();
 			t.foreign("profile_id").references("profiles.id");

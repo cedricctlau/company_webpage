@@ -5,7 +5,7 @@ export const loginGuard = (req: Request, res: Response, next: NextFunction) => {
 	try {
 		if (!req.session.staff) {
 			res.redirect("/");
-			throw new Error("Login Guard: failed");
+			throw new Error("Login Guard: redirecting to index.html");
 		}
 		next();
 	} catch (error) {
@@ -15,9 +15,9 @@ export const loginGuard = (req: Request, res: Response, next: NextFunction) => {
 
 export const adminGuard = (req: Request, res: Response, next: NextFunction) => {
 	try {
-		if (!req.session.staff?.priv.priv_all) {
-			res.redirect("/");
-			throw new Error("Admin Guard: failed");
+		if (!req.session.staff?.priv.isAdmin) {
+			res.redirect("/dashboard.html");
+			throw new Error("Admin Guard: redirecting to dashboard.html");
 		}
 		next();
 	} catch (error) {
@@ -32,7 +32,8 @@ export const redirectMiddleware = (
 ) => {
 	try {
 		if (req.session.staff) {
-			return res.redirect("/dashboard.html");
+			res.redirect("/dashboard.html");
+			throw new Error("Login Guard: redirecting to dashboard.html");
 		}
 		next();
 	} catch (error) {

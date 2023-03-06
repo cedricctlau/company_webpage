@@ -21,5 +21,7 @@ export default function myErrorHandler(e: any, req: Request, res: Response) {
 		},
 	};
 	console.error(e);
-	res.json(errorLog);
+	if (!res.headersSent) {
+		res.json(errorLog);
+	}
 }

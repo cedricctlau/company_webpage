@@ -1,8 +1,7 @@
 type Priv = {
-  priv_all: boolean;
-  priv_dept: boolean;
-  priv_team: boolean;
-  priv_private: boolean;
+	isAdmin: boolean;
+	isDeptHead: boolean;
+	isTeamHead: boolean;
 };
 
-export default Priv
+export default Priv;

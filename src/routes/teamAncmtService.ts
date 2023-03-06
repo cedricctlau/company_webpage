@@ -11,7 +11,8 @@ class TeamAncmtService {
 		const teamList = await this.knex<TeamMember>("team-members as tm")
 			.leftJoin<Team>("teams as t", "tm.team_id", "t.id")
 			.select("tm.team_id", "t.team")
-			.where("tm.staff_id", staff_id);
+			.where("tm.staff_id", staff_id)
+			.andWhere("tm.is_team_head", true);
 		return { success: true, outcome: { teamList } };
 	};
 

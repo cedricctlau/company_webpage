@@ -11,7 +11,8 @@ class DeptAncmtService {
 		const deptList = await this.knex<DeptMember>("dept-members as dm")
 			.leftJoin<Dept>("depts as d", "dm.dept_id", "d.id")
 			.select("dm.dept_id", "d.dept")
-			.where("dm.staff_id", staff_id);
+			.where("dm.staff_id", staff_id)
+			.andWhere("dm.is_dept_head", true);
 		return { success: true, outcome: { deptList } };
 	};
 

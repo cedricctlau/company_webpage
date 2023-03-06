@@ -64,7 +64,7 @@ function regLogoutBtn() {
 async function adminPortal() {
 	const res = await fetch("/getPriv");
 	const json = await res.json();
-	const check = json.outcome.priv.priv_all;
+	const check = json.outcome.priv.isAdmin;
 	if (!check) {
 		document
 			.querySelectorAll(".admin")

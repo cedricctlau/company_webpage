@@ -4,18 +4,19 @@ document
 		event.preventDefault();
 		const username = document.querySelector("#username").value;
 		const password = document.querySelector("#password").value;
-    const res = await fetch("/login", {
+		const res = await fetch("/login", {
 			method: "POST",
-			body: { username, password },
+			headers: { "Content-type": "application/json" },
+			body: JSON.stringify({ username, password }),
 		});
 		const json = await res.json();
-		if (json.success && !json.message) {
-			console.log("wrong!!!");
-			return;
+		if (!json.success) {
+			console.log("Backend problem");
 		}
 		if (json.success && json.message) {
-			document.querySelector("#username").value = "";
-			document.querySelector("#password").value = "";
+			document.querySelector(".warning").removeAttribute("hidden");
 			return;
 		}
+		console.log(json.outcome.staff);
+		window.location("dashboard.html");
 	});

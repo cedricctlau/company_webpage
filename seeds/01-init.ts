@@ -34,7 +34,7 @@ export async function seed(knex: Knex): Promise<void> {
 			{ team: "Team Mut Fee" },
 		]);
 		await txn<Title>("titles").insert([
-			{ title: "CEO" },
+			{ title: "Chief Executive Officer" },
 			{ title: "Technical Director" },
 			{ title: "Junior Developer" },
 			{ title: "Human Resources Manager" },
@@ -96,8 +96,7 @@ export async function seed(knex: Knex): Promise<void> {
 				username: "andrewbbshek@candy.io",
 				hashed_pw:
 					"$2a$10$QgdC9TsJIprhq8603/INKOYVeTgAC5UcBj9jPP2997TFs5WNHJNVq",
-				priv_all: true,
-				priv_private: true,
+				is_admin: true,
 				profile_id: 1,
 				personal_info_id: 1,
 			},
@@ -105,8 +104,7 @@ export async function seed(knex: Knex): Promise<void> {
 				username: "leosiklui@candy.io",
 				hashed_pw:
 					"$2a$10$QgdC9TsJIprhq8603/INKOYVeTgAC5UcBj9jPP2997TFs5WNHJNVq",
-				priv_all: true,
-				priv_private: true,
+				is_admin: true,
 				profile_id: 2,
 				personal_info_id: 2,
 			},
@@ -114,8 +112,7 @@ export async function seed(knex: Knex): Promise<void> {
 				username: "cedricmlchat@candy.io",
 				hashed_pw:
 					"$2a$10$QgdC9TsJIprhq8603/INKOYVeTgAC5UcBj9jPP2997TFs5WNHJNVq",
-				priv_all: true,
-				priv_private: true,
+				is_admin: true,
 				profile_id: 3,
 				personal_info_id: 3,
 			},

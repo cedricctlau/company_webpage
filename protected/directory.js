@@ -1,12 +1,12 @@
-import { loadNavBar } from "../navbar";
+import { loadNavBar } from "./navbar";
 import { resolve } from "path";
 
 window.onload(async () => {
-	await loadNavBar();
+	await loadNavBar(uploadDir);
 	showProfiles(allProfiles);
 });
 
-const uploadDir = resolve(__dirname + "/" + "../../uploads");
+const uploadDir = resolve(__dirname + "/" + "../uploads");
 const allProfiles = await getAllProfiles();
 
 function showProfiles(profiles) {

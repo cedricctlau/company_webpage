@@ -6,23 +6,21 @@ import Priv from "../models/priv";
 export default class UserController {
 	constructor(
 		private s: UserService,
-		private hashPassword: (a: string) => Promise<string>,
 		private errorHandler: (e: any, req: Request, res: Response) => void
 	) {}
 
 	login = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const { username, password } = req.body;
-			const hashed_pw = await this.hashPassword(password);
-			const json = await this.s.login(username, hashed_pw);
+			const json = await this.s.login(username, password);
 			if (json.success && json.message) {
 				res.json(json);
 				return;
 			}
 			const staff = json.outcome.staff;
 			req.session.staff = { id: staff.id, priv: staff.priv };
-			res.json(json);
-			return res.redirect(`dashboard.html`);
+			console.log(req.session)
+			return res.redirect('dashboard.html')
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
@@ -34,7 +32,7 @@ export default class UserController {
 				throw error;
 			});
 			res.json({ success: true });
-			return res.redirect(`index.html`);
+			return res.redirect(`/index.html`);
 		} catch (error) {
 			this.errorHandler(error, req, res);
 		}
@@ -43,9 +41,8 @@ export default class UserController {
 	changePW = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const staff_id = req.session.staff?.id as number;
-			const hashed_pw = await this.hashPassword(req.body.new_pw);
-			const hashed_old_pw = await this.hashPassword(req.body.old_pw);
-			const json = await this.s.changePW(staff_id, hashed_pw, hashed_old_pw);
+			const { oldPW, newPW } = req.body;
+			const json = await this.s.changePW(staff_id, oldPW, newPW);
 			res.json(json);
 		} catch (error) {
 			this.errorHandler(error, req, res);

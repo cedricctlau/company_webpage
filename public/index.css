@@ -1,24 +1,29 @@
 .navbar-brand {
-  font-size: 30px;
+	font-size: 30px;
 }
 
 #form-holder {
-  padding-top: 10vh;
-  display: flex;
-  justify-content: center;
+	padding-top: 10vh;
+	display: flex;
+	justify-content: center;
 }
 #login-form {
-  border: 10px inset gray;
-  min-width: 400px;
-  padding-bottom: 5px;
+	border: 10px inset gray;
+	min-width: 400px;
+	padding-bottom: 5px;
 }
 
 #login-form > h5,
 div {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
 }
 .label {
-    padding-right:8px
+	padding-right: 8px;
+}
+
+.warning {
+	color: red;
+	font-size: 12px;
 }

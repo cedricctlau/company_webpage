@@ -1,12 +1,12 @@
-import { loadNavBar } from "../navbar";
+import { loadNavBar } from "./navbar";
 import { resolve } from "path";
 
 window.onload(async () => {
-	await loadNavBar();
+	await loadNavBar(uploadDir);
 	await loadPage();
 });
 
-const uploadDir = resolve(__dirname + "/" + "../../uploads");
+const uploadDir = resolve(__dirname + "/" + "../uploads");
 
 async function loadPage() {
 	const res = await fetch("/getSelfProfile");
@@ -87,7 +87,8 @@ document.querySelector("#changePW-btn").addEventListener("click", async () => {
 	const newPW = newPWDiv.value;
 	const res = await fetch("/changePW", {
 		method: "POST",
-		body: { oldPW, newPW },
+		headers: { "Content-type": "application/json" },
+		body: JSON.stringify({ oldPW, newPW }),
 	});
 	const json = await res.json();
 	if (json.success && json.message === "Wrong PW") {
