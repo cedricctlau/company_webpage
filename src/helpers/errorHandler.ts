@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
+import { ErrorLog } from "../models/reply";
 
-interface ErrorLog {
-	success: boolean;
-	error: { method:string,path: string; statusCode: number | undefined; message: string };
-}
 
 export default function myErrorHandler(e: any, req: Request, res: Response) {
 	if (!(e instanceof Error)) {
@@ -17,13 +14,11 @@ export default function myErrorHandler(e: any, req: Request, res: Response) {
 		success: false,
 		error: {
 			method: req.method,
-			path: req.body.path,
+			url: req.url,
 			statusCode: req.statusCode,
 			message: e.message,
 		},
 	};
 	console.log(errorLog);
-	if (!res.headersSent) {
-		res.json(errorLog);
-	}
+	res.json(errorLog)
 }

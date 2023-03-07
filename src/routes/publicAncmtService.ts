@@ -9,15 +9,16 @@ class PublicAncmtService {
 	getPublicAncmts = async (staff_id: number): Promise<Reply> => {
 		const publicAncmtQry = await this.knex<PublicAncmt>("public-ancmts as p")
 			.leftJoin<Staff>("staffs as s", "p.staff_id", "s.id")
-			.select("p.*", "s.username");
+			.select("p.*", "s.username")
+			.orderBy("created_at", "desc");
 		const publicAncmts = publicAncmtQry.map((row) => {
 			const { id, content, created_at, username } = row;
 			return {
 				id,
 				content,
-				created_at: created_at.substring(0, 10),
+				created_at: created_at.toISOString().substring(0, 10),
 				username,
-				owned: row.staff_id === staff_id ? "owned" : "",
+				owned: row.staff_id === staff_id,
 			};
 		});
 		return {

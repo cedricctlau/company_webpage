@@ -18,4 +18,5 @@ document
 			document.querySelector(".warning").removeAttribute("hidden");
 			return;
 		}
+		window.location.assign("/dashboard.html");
 	});

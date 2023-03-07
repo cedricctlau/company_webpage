@@ -1,17 +1,21 @@
-@import "./navbar.css";
+@import "./modules/navbar.css";
 
-#directory-container {
+#profile-container {
 	padding: 10px;
 	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
-.directory {
+.profile {
 	border: double 3px grey;
 	width: 500px;
-	height:250px;
+	min-height: 250px;
 	padding: 10px;
 	display: grid;
 	grid-template-columns: 180px auto;
+	margin: 8px;
+	flex-basis: 500px;
 }
 
 .propic {
@@ -19,7 +23,7 @@
 	padding-top: 10px;
 }
 
-.directory-body {
+.profile-body {
 	height: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -36,3 +40,19 @@
 	font-family: "Courier New", Courier, monospace;
 }
 
+select:has(option:disabled:checked[hidden]) {
+	color: #595c5f;
+}
+
+#filters {
+	display: flex;
+	justify-content: center;
+}
+
+.filter-container {
+	padding-top: 10px;
+}
+
+.filter-container > * {
+	margin: 8px;
+}

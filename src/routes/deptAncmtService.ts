@@ -25,13 +25,14 @@ class DeptAncmtService {
 			.leftJoin<Staff>("staffs as s", "da.staff_id", "s.id")
 			.leftJoin<Dept>("depts as d", "da.dept_id", "d.id")
 			.select("da.*", "s.username", "d.dept")
-			.whereIn("da.dept_id", dept_ids);
+			.whereIn("da.dept_id", dept_ids)
+			.orderBy("da.created_at", "desc");
 		const deptAncmts = deptAncmtQry.map((row) => {
 			const { id, content, created_at, username, dept } = row;
 			return {
 				id,
 				content,
-				created_at: created_at.substring(0, 10),
+				created_at: created_at.toISOString().substring(0, 10),
 				username,
 				dept,
 				owned: row.staff_id === staff_id,

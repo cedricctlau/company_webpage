@@ -1,4 +1,4 @@
-@import "./navbar.css";
+@import "./modules/navbar.css";
 
 #public-ancmt-section {
 	margin: 2vh 1.3vw;
@@ -18,7 +18,7 @@
 	max-width: 95vw;
 	overflow-y: scroll;
 	scrollbar-width: none;
-		padding: 5px;
+	padding: 5px;
 }
 
 ::-webkit-scrollbar {
@@ -28,7 +28,7 @@
 .public-ancmt,
 .dept-ancmt,
 .team-ancmt {
-	margin: 8px 0px;
+	margin: 8px;
 }
 
 .note {
@@ -50,4 +50,8 @@
 	justify-content: center;
 	height: 50px;
 	padding-top: 10px;
+}
+
+.modal-body > * {
+	margin: 8px 0px;
 }

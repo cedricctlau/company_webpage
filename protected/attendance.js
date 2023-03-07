@@ -1,8 +1,5 @@
-import { loadNavBar } from "./navbar";
-import { resolve } from "path";
+import { loadNavBar } from "./modules/loadNavbar.js";
 
-window.onload(async () => {
-	await loadNavBar(uploadDir);
-});
-
-const uploadDir = resolve(__dirname + "/" + "../uploads");
+window.onload = async () => {
+	await loadNavBar();
+};

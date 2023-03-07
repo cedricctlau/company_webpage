@@ -36,27 +36,31 @@
 			<section id="form-holder">
 				<form action="/login" method="POST" id="login-form">
 					<h5 class="welcome">Welcome to Candy's DashBoard</h5>
-					<div>
-						<div class="label">Username:</div>
-						<div>
+					<div class="row">
+						<label for="username" class="col-3 col-form-label">Username:</label>
+						<div class="col-9">
 							<input
 								id="username"
 								type="text"
 								name="username"
+								class="form-control"
 								placeholder="local@candy.io"
 								required
 							/>
 						</div>
 					</div>
-					<div>
-						<div class="label">Password:</div>
-						<input
-							id="password"
-							type="password"
-							name="password"
-							placeholder="Input your password here"
-							required
-						/>
+					<div class="row">
+						<label for="password" class="col-3 col-form-label">Password:</label>
+						<div class="col-9">
+							<input
+								id="password"
+								type="password"
+								name="password"
+								class="form-control"
+								placeholder="Input your password here"
+								required
+							/>
+						</div>
 					</div>
 					<div class="warning" hidden>
 						Incorrect username / password ! Please try again !

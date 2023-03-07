@@ -1,12 +1,13 @@
 import express from "express";
 import { join } from "path";
 import { logger } from "./helpers/logger";
-import { adminGuard, loginGuard, redirectMiddleware } from "./helpers/guard";
+import { adminGuard, loginGuard } from "./helpers/guard";
 import "./helpers/session";
 import { sessionMiddleware } from "./helpers/session";
 import {
 	adminRoute,
 	deptAncmtRoute,
+	profileRoute,
 	publicAncmtRoute,
 	teamAncmtRoute,
 	userRoute,
@@ -22,12 +23,13 @@ app.use(logger);
 
 app.use("/", adminRoute);
 app.use("/", deptAncmtRoute);
+app.use("/", profileRoute);
 app.use("/", publicAncmtRoute);
 app.use("/", teamAncmtRoute);
 app.use("/", userRoute);
 
 const publicDir = join(__dirname, "../public");
-const uploadDir = join(__dirname, "../upload");
+const uploadDir = join(__dirname, "../uploads");
 const protectedDir = join(__dirname, "../protected");
 const adminDir = join(__dirname, "../admin");
 app.use(express.static(publicDir));

@@ -54,19 +54,12 @@
 						<li class="nav-item">
 							<a class="nav-link" href="directory.html">Staff Directory</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link admin" href="admin_portal.html"
-								>Admin Portal</a
-							>
+						<li class="nav-item admin-only" hidden>
+							<a class="nav-link" href="portal.html">Admin Portal</a>
 						</li>
 					</ul>
 					<div class="holder">
-						<a id="welcome" href="./profile.html"
-							><div>
-								<img id="icon" src="../../uploads/5e843ef35ad6e.jpg" />
-							</div>
-							<div id="mini-profile">Andrew (andrewbbshek@candy.io)</div>
-						</a>
+						<a id="welcome" href="./profile.html"> </a>
 						<div class="dropdown">
 							<button
 								class="btn btn-secondary dropdown-toggle"
@@ -76,33 +69,9 @@
 							>
 								<i class="fa-solid fa-temperature-half"></i>
 							</button>
-							<table class="dropdown-menu" id="weather-dropdown">
-								<tr>
-									<td>Temperature:</td>
-									<td>20°C</td>
-								</tr>
-								<tr>
-									<td>Humidity</td>
-									<td>30%</td>
-								</tr>
-								<tr>
-									<td>Rainfall:</td>
-									<td>0mm</td>
-								</tr>
-								<tr>
-									<td colspan="2">Warning Message:</td>
-								</tr>
-								<tr>
-									<td id="#warningMess" colspan="2">
-										<ul>
-											<li>
-												The Fire Danger Warning is Red and the fire risk is
-												extreme.
-											</li>
-										</ul>
-									</td>
-								</tr>
-							</table>
+							<div class="dropdown-menu" id="weather-dropdown">
+								<div id="wwo-weather-widget-3"></div>
+							</div>
 						</div>
 						<a id="logout-btn" class="btn btn-secondary">
 							<i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -121,6 +90,11 @@
 			integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 			crossorigin="anonymous"
 		></script>
-		<script type="module" src="./attendance.js"></script>
+		<script
+			type="text/javascript"
+			src="https://www.worldweatheronline.com/widget/v5/weather-widget.ashx?loc=918425&wid=3&tu=1&div=wwo-weather-widget-3"
+			async
+		></script>
+		<script type="module" src="attendance.js"></script>
 	</body>
 </html>

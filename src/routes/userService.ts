@@ -37,7 +37,7 @@ export default class UserService {
 			.select("*")
 			.where({ staff_id: id, is_team_head: true });
 		const isTeamHead = teamMemberRows.length > 0 ? true : false;
-		const priv: Priv = { isAdmin, isDeptHead, isTeamHead };		
+		const priv: Priv = { isAdmin, isDeptHead, isTeamHead };
 		return { success: true, outcome: { staff: { id, priv } } };
 	};
 
@@ -66,7 +66,7 @@ export default class UserService {
 			.leftJoin<Profile>("profiles as p", "s.profile_id", "p.id")
 			.leftJoin<Title>("titles as t", "p.title_id", "t.id")
 			.leftJoin<PersonalInfo>(
-				"personal_infos as pi",
+				"personal-infos as pi",
 				"s.personal_info_id",
 				"pi.id"
 			)
@@ -74,30 +74,5 @@ export default class UserService {
 			.where("s.id", staff_id);
 		const profile = jointRows[0];
 		return { success: true, outcome: { profile } };
-	};
-
-	getAllProfiles = async (): Promise<Reply> => {
-		const jointRows = await this.knex<Staff>("staffs as s")
-			.leftJoin<Profile>("profiles as p", "s.profile_id", "p.id")
-			.leftJoin<Title>("titles as t", "p.title_id", "t.id")
-			.select("s.id as staff_id", "s.username", "p.*", "t.title")
-			.where("active", true)
-			.orderBy([
-				{ column: "p.first_name" },
-				{ column: "p.last_name" },
-				{ column: "t.title" },
-			]);
-		const profiles = jointRows.map((row) => {
-			return {
-				staff_id: row.staff_id,
-				name: row.last_name + ", " + row.first_name + " (" + row.nickname + ")",
-				gender: row.gender,
-				title: row.title,
-				email: row.username,
-				tel: row.tel,
-				picture: row.picture,
-			};
-		});
-		return { success: true, outcome: { profiles } };
 	};
 }

@@ -22,16 +22,17 @@ class TeamAncmtService {
 			.where("staff_id", staff_id);
 		const team_ids = teamQuery.map((obj) => obj.team_id);
 		const teamAncmtQry = await this.knex<TeamAncmt>("team-ancmts as ta")
-			.leftJoin<Staff>("staffs as s", "da.staff_id", "s.id")
+			.leftJoin<Staff>("staffs as s", "ta.staff_id", "s.id")
 			.leftJoin<Team>("teams as t", "ta.team_id", "t.id")
 			.select("ta.*", "s.username", "t.team")
-			.whereIn("ta.team_id", team_ids);
+			.whereIn("ta.team_id", team_ids)
+			.orderBy("created_at", "desc");
 		const teamAncmts = teamAncmtQry.map((row) => {
 			const { id, content, created_at, username, team } = row;
 			return {
 				id,
 				content,
-				created_at: created_at.substring(0, 10),
+				created_at: created_at.toISOString().substring(0, 10),
 				username,
 				team,
 				owned: row.staff_id === staff_id,
