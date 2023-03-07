@@ -28,14 +28,15 @@ class TeamAncmtService {
 			.whereIn("ta.team_id", team_ids)
 			.orderBy("created_at", "desc");
 		const teamAncmts = teamAncmtQry.map((row) => {
-			const { id, content, created_at, username, team } = row;
+			const { id, content, staff_id: owner_id, created_at, username, team } = row;
 			return {
 				id,
+				staff_id: owner_id,
 				content,
 				created_at: created_at.toISOString().substring(0, 10),
 				username,
 				team,
-				owned: row.staff_id === staff_id,
+				owned: staff_id === owner_id,
 			};
 		});
 		return {

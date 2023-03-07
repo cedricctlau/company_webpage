@@ -1,4 +1,4 @@
-@import "./navbar.css";
+@import "./modules/navbar.css";
 
 .profile {
 	padding: 10px;
@@ -24,7 +24,8 @@
 	border: double 3px grey;
 	width: 500px;
 	height: 300px;
-	margin:10px
+	margin: 10px;
+	flex-basis: 500px;
 }
 
 .propic {
@@ -42,8 +43,8 @@
 	font-family: "Courier New", Courier, monospace;
 }
 
-.flex-container{
-	display:flex;
+.flex-container {
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -57,4 +58,16 @@
 
 .td {
 	margin: 5px;
+}
+
+#profile-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+th,
+td,
+tr {
+	border: 1px solid black;
 }

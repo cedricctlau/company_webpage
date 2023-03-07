@@ -25,4 +25,14 @@ export default class ProfileController {
 			this.errorHandler(error, req, res);
 		}
 	};
+
+	getMembership = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const id = req.session.staff?.id as number;
+			const json = await this.s.getMembership(id);
+			res.json(json)
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
 }

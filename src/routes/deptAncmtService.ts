@@ -28,14 +28,22 @@ class DeptAncmtService {
 			.whereIn("da.dept_id", dept_ids)
 			.orderBy("da.created_at", "desc");
 		const deptAncmts = deptAncmtQry.map((row) => {
-			const { id, content, created_at, username, dept } = row;
+			const {
+				id,
+				staff_id: owner_id,
+				content,
+				created_at,
+				username,
+				dept,
+			} = row;
 			return {
 				id,
+				staff_id: owner_id,
 				content,
 				created_at: created_at.toISOString().substring(0, 10),
 				username,
 				dept,
-				owned: row.staff_id === staff_id,
+				owned: staff_id === owner_id,
 			};
 		});
 		return {

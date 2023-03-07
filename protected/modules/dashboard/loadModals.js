@@ -3,7 +3,9 @@ import { loadAncmts } from "./loadAncmts.js";
 export async function loadModals() {
 	await updateDeptList();
 	await updateTeamList();
-	regLxnrs();
+	regAddAncmtBtns();
+	regOpenEditModal();
+	regEditBtns();
 }
 
 async function updateDeptList() {
@@ -44,9 +46,9 @@ async function updateTeamList() {
 	}
 }
 
-function regLxnrs() {
+function regAddAncmtBtns() {
 	document
-		.querySelector("#public-ancmt-submit-btn")
+		.querySelector("#add-public-ancmt-btn")
 		.addEventListener("click", async (event) => {
 			event.preventDefault();
 			const content = document.querySelector("#public-ancmt-content").value;
@@ -68,11 +70,12 @@ function regLxnrs() {
 			}
 			alert("Announcement created!");
 			document.querySelector("#public-ancmt-content").value = "";
+			document.querySelector("#close-add-public-ancmt-btn").click();
 			loadAncmts();
 		});
 
 	document
-		.querySelector("#dept-ancmt-submit-btn")
+		.querySelector("#add-dept-ancmt-btn")
 		.addEventListener("click", async (event) => {
 			event.preventDefault();
 			const dept_id = parseInt(document.querySelector("#dept-select").value);
@@ -101,11 +104,12 @@ function regLxnrs() {
 			alert(`Announcement created!`);
 			document.querySelector("#dept-select").value = "";
 			document.querySelector("#dept-ancmt-content").value = "";
+			document.querySelector("#close-add-dept-ancmt-btn").click();
 			loadAncmts();
 		});
 
 	document
-		.querySelector("#team-ancmt-submit-btn")
+		.querySelector("#add-team-ancmt-btn")
 		.addEventListener("click", async (event) => {
 			event.preventDefault();
 			const team_id = parseInt(document.querySelector("#team-select").value);
@@ -134,6 +138,196 @@ function regLxnrs() {
 			alert(`Announcement created!`);
 			document.querySelector("#team-select").value = "";
 			document.querySelector("#team-ancmt-content").value = "";
+			document.querySelector("#close-add-team-ancmt-btn").click();
+			loadAncmts();
+		});
+}
+
+function regOpenEditModal() {
+	document.querySelectorAll(".public-ancmt").forEach((node) => {
+		node.addEventListener("click", () => {
+			const contentNode = document.querySelector("#edit-public-ancmt-content");
+			contentNode.innerText = node.dataset.content;
+			contentNode.dataset.id = node.dataset.id;
+			contentNode.dataset.owner = node.dataset.owner;
+		});
+	});
+	document.querySelectorAll(".dept-ancmt").forEach((node) => {
+		node.addEventListener("click", () => {
+			const contentNode = document.querySelector("#edit-dept-ancmt-content");
+			contentNode.innerText = node.dataset.content;
+			contentNode.dataset.id = node.dataset.id;
+			contentNode.dataset.owner = node.dataset.owner;
+		});
+	});
+	document.querySelectorAll(".team-ancmt").forEach((node) => {
+		node.addEventListener("click", () => {
+			const contentNode = document.querySelector("#edit-team-ancmt-content");
+			contentNode.innerText = node.dataset.content;
+			contentNode.dataset.id = node.dataset.id;
+			contentNode.dataset.owner = node.dataset.owner;
+		});
+	});
+}
+
+function regEditBtns() {
+	document
+		.querySelector("#edit-public-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const contentNode = document.querySelector("#edit-public-ancmt-content");
+			const content = contentNode.value;
+			const owner_id = contentNode.dataset.owner;
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const res = await fetch(`/editPublicAncmt/${contentNode.dataset.id}`, {
+				method: "PUT",
+				headers: { "Content-type": "application/json" },
+				body: JSON.stringify({ content, owner_id }),
+			});
+			const json = await res.json();
+			if (!json.success) {
+				console.log(json);
+				alert(
+					`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement edited!");
+			contentNode.value = "";
+			document.querySelector("#close-edit-public-ancmt-btn").click();
+			loadAncmts();
+		});
+
+	document
+		.querySelector("#edit-dept-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const contentNode = document.querySelector("#edit-dept-ancmt-content");
+			const content = contentNode.value;
+			const owner_id = contentNode.dataset.owner;
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const res = await fetch(`/editDeptAncmt/${contentNode.dataset.id}`, {
+				method: "PUT",
+				headers: { "Content-type": "application/json" },
+				body: JSON.stringify({ content, owner_id }),
+			});
+			const json = await res.json();
+			if (!json.success) {
+				console.log(json);
+				alert(
+					`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement edited!");
+			contentNode.value = "";
+			document.querySelector("#close-edit-dept-ancmt-btn").click();
+			loadAncmts();
+		});
+
+	document
+		.querySelector("#edit-team-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const contentNode = document.querySelector("#edit-team-ancmt-content");
+			const content = contentNode.value;
+			const owner_id = contentNode.dataset.owner;
+			if (!content) {
+				alert(`Please insert announcement content!`);
+				return;
+			}
+			const res = await fetch(`/editTeamAncmt/${contentNode.dataset.id}`, {
+				method: "PUT",
+				headers: { "Content-type": "application/json" },
+				body: JSON.stringify({ content, owner_id }),
+			});
+			const json = await res.json();
+			if (!json.success) {
+				console.log(json);
+				alert(
+					`Unexpected error occurred when editing announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement edited!");
+			contentNode.value = "";
+			document.querySelector("#close-edit-team-ancmt-btn").click();
+			loadAncmts();
+		});
+
+	document
+		.querySelector("#del-public-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const contentNode = document.querySelector("#edit-public-ancmt-content");
+			const owner_id = contentNode.dataset.owner;
+			const res = await fetch(`/delPublicAncmt/${contentNode.dataset.id}`, {
+				method: "DELETE",
+				headers: { "Content-type": "application/json" },
+				body: JSON.stringify({ owner_id }),
+			});
+			const json = await res.json();
+			if (!json.success) {
+				console.log(json);
+				alert(
+					`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement deleted!");
+			document.querySelector("#close-edit-public-ancmt-btn").click();
+			loadAncmts();
+		});
+	document
+		.querySelector("#del-dept-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const contentNode = document.querySelector("#edit-dept-ancmt-content");
+			const owner_id = contentNode.dataset.owner;
+			const res = await fetch(`/delDeptAncmt/${contentNode.dataset.id}`, {
+				method: "DELETE",
+				headers: { "Content-type": "application/json" },
+				body: JSON.stringify({ owner_id }),
+			});
+			const json = await res.json();
+			if (!json.success) {
+				console.log(json);
+				alert(
+					`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement deleted!");
+			document.querySelector("#close-edit-dept-ancmt-btn").click();
+			loadAncmts();
+		});
+	document
+		.querySelector("#del-team-ancmt-btn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const contentNode = document.querySelector("#edit-team-ancmt-content");
+			const owner_id = contentNode.dataset.owner;
+			const res = await fetch(`/delTeamAncmt/${contentNode.dataset.id}`, {
+				method: "DELETE",
+				headers: { "Content-type": "application/json" },
+				body: JSON.stringify({ owner_id }),
+			});
+			const json = await res.json();
+			if (!json.success) {
+				console.log(json);
+				alert(
+					`Unexpected error occurred when deleting announcement!\nPlease refresh the page and try again!\nContact the IT department if this error persists...`
+				);
+				return;
+			}
+			alert("Announcement deleted!");
+			document.querySelector("#close-edit-team-ancmt-btn").click();
 			loadAncmts();
 		});
 }

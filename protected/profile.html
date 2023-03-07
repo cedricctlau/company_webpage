@@ -49,19 +49,12 @@
 						<li class="nav-item">
 							<a class="nav-link" href="directory.html">Staff Directory</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link admin" href="../admin/admin_portal.html"
-								>Admin Portal</a
-							>
+						<li class="nav-item admin-only" hidden>
+							<a class="nav-link" href="portal.html">Admin Portal</a>
 						</li>
 					</ul>
 					<div class="holder">
-						<a id="welcome" href="./profile.html"
-							><div>
-								<img id="icon" src="../../uploads/5e843ef35ad6e.jpg" />
-							</div>
-							<div id="mini-profile">Andrew (andrewbbshek@candy.io)</div>
-						</a>
+						<a id="welcome" href="./profile.html"> </a>
 						<div class="dropdown">
 							<button
 								class="btn btn-secondary dropdown-toggle"
@@ -71,33 +64,9 @@
 							>
 								<i class="fa-solid fa-temperature-half"></i>
 							</button>
-							<table class="dropdown-menu" id="weather-dropdown">
-								<tr>
-									<td>Temperature:</td>
-									<td>20°C</td>
-								</tr>
-								<tr>
-									<td>Humidity</td>
-									<td>30%</td>
-								</tr>
-								<tr>
-									<td>Rainfall:</td>
-									<td>0mm</td>
-								</tr>
-								<tr>
-									<td colspan="2">Warning Message:</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<ul>
-											<li>
-												The Fire Danger Warning is Red and the fire risk is
-												extreme.
-											</li>
-										</ul>
-									</td>
-								</tr>
-							</table>
+							<div class="dropdown-menu" id="weather-dropdown">
+								<div id="wwo-weather-widget-3"></div>
+							</div>
 						</div>
 						<a id="logout-btn" class="btn btn-secondary">
 							<i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -108,50 +77,8 @@
 		</nav>
 
 		<main>
-			<div class="flex-container">
-				<div id="profile-container">
-					<section id="front">
-						<div class="profile" data-id="1">
-							<img class="propic" src="../../uploads/5e843ef35ad6e.jpg" />
-							<div class="directory-body">
-								<div class="label">Familiar Name</div>
-								<div class="content">Andrew</div>
-								<div class="label">First Name</div>
-								<div class="content">Big Boss</div>
-								<div class="label">Last Name</div>
-								<div class="content">Shek</div>
-								<div class="label">Gender</div>
-								<div class="content">M</div>
-								<div class="label">Title</div>
-								<div class="content">Chief Executive Officer</div>
-								<div class="label">Tel</div>
-								<div class="content">23800000</div>
-								<div class="label">Email</div>
-								<div class="content">andrewbbshek@candy.io</div>
-							</div>
-						</div>
-					</section>
-					<section id="back">
-						<div id="personal-info">
-							<div class="disclaimer">
-								&lt;This confidential section is only accessible by HR
-								Department&gt;
-							</div>
-							<div class="label">HKID</div>
-							<div class="content">A123456(7)</div>
-							<div class="label">Date of Birth</div>
-							<div class="content">2023-03-02</div>
-							<div class="label">Address</div>
-							<div class="content">
-								Candy Int. Ltd., 20B, TML Tower, 3 Hoi Shing Rd, Tsuen Wan
-							</div>
-							<div class="label">Bank Account</div>
-							<div class="content">000000000000000</div>
-							<div class="label">Monthly Salary</div>
-							<div class="content">$10970.00</div>
-						</div>
-					</section>
-				</div>
+			<section class="flex-container">
+				<div id="profile-container"></div>
 				<button
 					class="btn btn-success"
 					data-bs-toggle="modal"
@@ -159,7 +86,33 @@
 				>
 					Change Password
 				</button>
-			</div>
+			</section>
+			<section id="membership">
+				<div id="dept">
+					<div>You are a member of the following departments:</div>
+					<table>
+						<thead>
+							<tr>
+								<th>Department</th>
+								<th>Department Head</th>
+							</tr>
+						</thead>
+						<tbody id="deptMembership"></tbody>
+					</table>
+				</div>
+				<div id="team">
+					<div>You are a member of the following teams:</div>
+					<table>
+						<thead>
+							<tr>
+								<th>Team</th>
+								<th>Team Head</th>
+							</tr>
+						</thead>
+						<tbody id="teamMembership"></tbody>
+					</table>
+				</div>
+			</section>
 		</main>
 
 		<section
@@ -183,23 +136,48 @@
 						></button>
 					</div>
 					<div class="modal-body">
-						<table>
-							<tr>
-								<td>Enter Original Password:</td>
-								<td><input type="password" id="originalPW" /></td>
-							</tr>
-							<tr>
-								<td>Enter New Password:</td>
-								<td><input type="password" id="newPW" /></td>
-							</tr>
-							<tr>
-								<td>Re-enter New Password:</td>
-								<td><input type="password" id="newPW2" /></td>
-							</tr>
-						</table>
+						<div class="label">Current password</div>
+						<div>
+							<input
+								id="oldPW"
+								type="password"
+								name="password"
+								class="form-control"
+								placeholder="Enter your current password"
+								required
+							/>
+						</div>
+
+						<div class="label">New password</div>
+						<div>
+							<input
+								id="newPW"
+								type="password"
+								name="password"
+								class="form-control"
+								placeholder="Enter your new password"
+								required
+							/>
+						</div>
+
+						<div class="label">Confirm new password</div>
+						<div>
+							<input
+								id="newPW2"
+								type="password"
+								name="password"
+								class="form-control"
+								placeholder="Enter your new password again"
+								required
+							/>
+						</div>
+						<div class="warning" hidden>
+							Incorrect username / password ! Please try again !
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button
+							id="close-modal-btn"
 							type="button"
 							class="btn btn-secondary"
 							data-bs-dismiss="modal"
@@ -219,6 +197,6 @@
 			integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 			crossorigin="anonymous"
 		></script>
-		<script type="module" src="./profile.js"></script>
+		<script type="module" src="profile.js"></script>
 	</body>
 </html>

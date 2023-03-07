@@ -39,6 +39,7 @@ const s3 = new ProfileService(myKnex);
 const c3 = new ProfileController(s3, myErrorHandler);
 profileRoute.get("/getAllProfiles", c3.getAllProfiles);
 profileRoute.get("/getAllTitles", c3.getAllTitles);
+profileRoute.get("/getMembership", c3.getMembership);
 
 export const publicAncmtRoute = Router();
 const s4 = new PublicAncmtService(myKnex);

@@ -205,7 +205,7 @@
 								class="btn btn-success"
 								name="submit"
 								value="submit"
-								id="public-ancmt-submit-btn"
+								id="add-public-ancmt-btn"
 							>
 								Submit
 							</button>
@@ -220,6 +220,7 @@
 								class="btn btn-secondary"
 								data-bs-dismiss="modal"
 								aria-label="Close"
+								id="close-add-public-ancmt-btn"
 							>
 								Close
 							</button>
@@ -258,7 +259,7 @@
 								class="btn btn-success"
 								name="submit"
 								value="submit"
-								id="dept-ancmt-submit-btn"
+								id="add-dept-ancmt-btn"
 							>
 								Submit
 							</button>
@@ -273,6 +274,7 @@
 								class="btn btn-secondary"
 								data-bs-dismiss="modal"
 								aria-label="Close"
+								id="close-add-dept-ancmt-btn"
 							>
 								Close
 							</button>
@@ -311,7 +313,7 @@
 								class="btn btn-success"
 								name="submit"
 								value="submit"
-								id="team-ancmt-submit-btn"
+								id="add-team-ancmt-btn"
 							>
 								Submit
 							</button>
@@ -326,6 +328,7 @@
 								class="btn btn-secondary"
 								data-bs-dismiss="modal"
 								aria-label="Close"
+								id="close-add-team-ancmt-btn"
 							>
 								Close
 							</button>
@@ -360,28 +363,29 @@
 							<textarea
 								name="content"
 								id="edit-public-ancmt-content"
+								class="form-control"
 							></textarea>
 						</div>
 						<div class="modal-footer">
 							<button
 								type="button"
-								class="btn btn-secondary"
-								data-bs-dismiss="modal"
+								class="btn btn-primary"
+								id="edit-public-ancmt-btn"
 							>
-								Close</button
+								Save changes</button
 							><button
 								type="button"
 								class="btn btn-danger"
 								id="del-public-ancmt-btn"
 							>
-								Delete Announcement
-							</button>
-							<button
+								Delete Announcement</button
+							><button
 								type="button"
-								class="btn btn-primary"
-								id="edit-public-ancmt-btn"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+								id="close-edit-public-ancmt-btn"
 							>
-								Save changes
+								Close
 							</button>
 						</div>
 					</div>
@@ -409,15 +413,19 @@
 							></button>
 						</div>
 						<div class="modal-body">
-							<textarea name="content" id="edit-dept-ancmt-content"></textarea>
+							<textarea
+								name="content"
+								id="edit-dept-ancmt-content"
+								class="form-control"
+							></textarea>
 						</div>
 						<div class="modal-footer">
 							<button
 								type="button"
-								class="btn btn-secondary"
-								data-bs-dismiss="modal"
+								class="btn btn-primary"
+								id="edit-dept-ancmt-btn"
 							>
-								Close</button
+								Save changes</button
 							><button
 								type="button"
 								class="btn btn-danger"
@@ -427,10 +435,11 @@
 							</button>
 							<button
 								type="button"
-								class="btn btn-primary"
-								id="edit-dept-ancmt-btn"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+								id="close-edit-dept-ancmt-btn"
 							>
-								Save changes
+								Close
 							</button>
 						</div>
 					</div>
@@ -458,28 +467,32 @@
 							></button>
 						</div>
 						<div class="modal-body">
-							<textarea name="content" id="edit-team-ancmt-content"></textarea>
+							<textarea
+								name="content"
+								id="edit-team-ancmt-content"
+								class="form-control"
+							></textarea>
 						</div>
 						<div class="modal-footer">
-							<button
-								type="button"
-								class="btn btn-secondary"
-								data-bs-dismiss="modal"
-							>
-								Close</button
-							><button
-								type="button"
-								class="btn btn-danger"
-								id="del-team-ancmt-btn"
-							>
-								Delete Announcement
-							</button>
 							<button
 								type="button"
 								class="btn btn-primary"
 								id="edit-team-ancmt-btn"
 							>
-								Save changes
+								Save changes</button
+							><button
+								type="button"
+								class="btn btn-danger"
+								id="del-team-ancmt-btn"
+							>
+								Delete Announcement</button
+							><button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+								id="close-edit-team-ancmt-btn"
+							>
+								Close
 							</button>
 						</div>
 					</div>

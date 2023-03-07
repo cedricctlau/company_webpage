@@ -12,13 +12,14 @@ class PublicAncmtService {
 			.select("p.*", "s.username")
 			.orderBy("created_at", "desc");
 		const publicAncmts = publicAncmtQry.map((row) => {
-			const { id, content, created_at, username } = row;
+			const { id, staff_id: owner_id, content, created_at, username } = row;
 			return {
 				id,
+				staff_id: owner_id,
 				content,
 				created_at: created_at.toISOString().substring(0, 10),
 				username,
-				owned: row.staff_id === staff_id,
+				owned: staff_id === owner_id,
 			};
 		});
 		return {

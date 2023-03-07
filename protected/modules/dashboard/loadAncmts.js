@@ -23,11 +23,13 @@ async function loadPublicAncmt() {
 	holder.innerHTML = "";
 	const ancmts = json.outcome.publicAncmts;
 	for (const ancmt of ancmts) {
-		const { id, content, created_at, owned, username } = ancmt;
+		const { id, staff_id, content, created_at, owned, username } = ancmt;
 		const creator = username.substring(0, username.search("@"));
 		const style = owned ? "btn-secondary" : "btn-outline-secondary";
-
-		holder.innerHTML += /*html*/ `<div class="public-ancmt ${owned} btn ${style}" data-id="${id}" data-content=${content}><div class="content">${content}</div><div class="note">created by ${creator} on ${created_at}</div></div>`;
+		const asBtn = owned
+			? `data-bs-target="#edit-public-ancmt-modal"	data-bs-toggle="modal"`
+			: "";
+		holder.innerHTML += /*html*/ `<div class="public-ancmt btn ${style}" data-id="${id}" data-owner="${staff_id}" data-content="${content}" ${asBtn}><div class="content">${content}</div><div class="note">created by ${creator} on ${created_at}</div></div>`;
 	}
 }
 
@@ -47,10 +49,13 @@ async function loadDeptAncmt() {
 	holder.innerHTML = "";
 	const ancmts = json.outcome.deptAncmts;
 	for (const ancmt of ancmts) {
-		const { id, content, created_at, owned, dept, username } = ancmt;
+		const { id, staff_id, content, created_at, owned, dept, username } = ancmt;
 		const creator = username.substring(0, username.search("@"));
 		const style = owned ? "btn-danger" : "btn-outline-danger";
-		holder.innerHTML += /*html*/ `<div class="dept-ancmt ${owned} btn ${style}" data-id="${id}" data-content=${content} ><div class="note">(${dept})</div><div class="content">${content}</div><div class="note">created by ${creator} on ${created_at}</div></div>`;
+		const asBtn = owned
+			? `data-bs-target="#edit-dept-ancmt-modal"	data-bs-toggle="modal"`
+			: "";
+		holder.innerHTML += /*html*/ `<div class="dept-ancmt btn ${style}" data-id="${id}" data-owner="${staff_id}" data-content="${content}" ${asBtn} ><div class="note">(${dept})</div><div class="content">${content}</div><div class="note">created by ${creator} on ${created_at}</div></div>`;
 	}
 }
 
@@ -70,10 +75,13 @@ async function loadTeamAncmt() {
 	holder.innerHTML = "";
 	const ancmts = json.outcome.teamAncmts;
 	for (const ancmt of ancmts) {
-		const { id, content, created_at, owned, team, username } = ancmt;
+		const { id, staff_id, content, created_at, owned, team, username } = ancmt;
 		const creator = username.substring(0, username.search("@"));
 		const style = owned ? "btn-info" : "btn-outline-info";
-		holder.innerHTML += /*html*/ `<div class="team-ancmt ${owned} btn ${style} data-content=${content}" data-id="${id}" ><div class="note">(${team})</div><div class="content">${content}</div><div class="note">created by ${creator} on ${created_at}</div></div>`;
+		const asBtn = owned
+			? `data-bs-target="#edit-team-ancmt-modal"	data-bs-toggle="modal"`
+			: "";
+		holder.innerHTML += /*html*/ `<div class="team-ancmt btn ${style}" data-content="${content}" data-id="${id}" data-owner="${staff_id}" ${asBtn} ><div class="note">(${team})</div><div class="content">${content}</div><div class="note">created by ${creator} on ${created_at}</div></div>`;
 	}
 }
 

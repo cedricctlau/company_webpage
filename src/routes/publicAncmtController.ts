@@ -33,8 +33,10 @@ class PublicAncmtController {
 		try {
 			const id = parseInt(req.params.id);
 			const staff_id = req.session.staff?.id as number;
-			const owner_id = req.body.id as number;
+			const owner_id = parseInt(req.body.owner_id);
 			if (staff_id !== owner_id) {
+				console.log({ staff_id, owner_id });
+
 				throw new Error(
 					`This hacker tried to del an announcement owned by others`
 				);
@@ -51,7 +53,7 @@ class PublicAncmtController {
 		try {
 			const id = parseInt(req.params.id);
 			const staff_id = req.session.staff?.id as number;
-			const owner_id = req.body.id as number;
+			const owner_id = parseInt(req.body.owner_id);
 			if (staff_id !== owner_id) {
 				throw new Error(
 					`This hacker tried to del an announcement owned by others`

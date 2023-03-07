@@ -55,3 +55,17 @@
 .modal-body > * {
 	margin: 8px 0px;
 }
+
+#public-ancmt-holder,
+#dept-ancmt-holder,
+#team-ancmt-holder {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+#public-ancmt-holder > *,
+#dept-ancmt-holder > *,
+#team-ancmt-holder > * {
+	flex-basis: content;
+}
