@@ -1,0 +1,84 @@
+@import "./modules/navbar.css";
+
+.profile {
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 180px auto;
+}
+
+#personal-info {
+	padding: 10px;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+#personal-info > div {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.box {
+	border: double 3px grey;
+	width: 500px;
+	margin: 10px;
+	flex-basis: 500px;
+}
+
+.propic {
+	width: 150px;
+	padding-top: 10px;
+}
+
+.label {
+	color: #aaaaaa;
+	font-size: 10px;
+}
+
+.content {
+	text-align: center;
+	font-family: "Courier New", Courier, monospace;
+}
+
+.flex-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.disclaimer {
+	font-size: 12px;
+	text-align: center;
+	color: red;
+}
+
+.td {
+	margin: 5px;
+}
+
+#profile-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+table {
+	width: 80%;
+	text-align: center;
+}
+
+th,
+td,
+tr {
+	border: 1px solid black;
+}
+
+#membership > div {
+	margin: 10px;
+}
+
+.td1 {
+	width: 60%;
+}

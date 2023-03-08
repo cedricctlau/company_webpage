@@ -1,0 +1,71 @@
+@import "./modules/navbar.css";
+
+#public-ancmt-section {
+	margin: 2vh 1.3vw;
+	border: 5px solid gray;
+	height: 82vh;
+	max-width: 95vw;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	padding: 5px;
+}
+
+#dept-ancmt-section,
+#team-ancmt-section {
+	margin: 2vh 1.3vw;
+	border: 5px solid gray;
+	height: 40vh;
+	max-width: 95vw;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	padding: 5px;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+.public-ancmt,
+.dept-ancmt,
+.team-ancmt {
+	margin: 8px;
+}
+
+.note {
+	font-size: 10px;
+	text-align: center;
+}
+
+.section-header {
+	text-align: center;
+}
+
+.btn-container {
+	padding-top: 10px;
+	height: 5vh;
+}
+
+.ancmt-btn-holder {
+	display: flex;
+	justify-content: center;
+	height: 50px;
+	padding-top: 10px;
+}
+
+.modal-body > * {
+	margin: 8px 0px;
+}
+
+#public-ancmt-holder,
+#dept-ancmt-holder,
+#team-ancmt-holder {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+#public-ancmt-holder > *,
+#dept-ancmt-holder > *,
+#team-ancmt-holder > * {
+	flex-basis: content;
+}
