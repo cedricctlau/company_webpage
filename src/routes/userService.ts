@@ -72,7 +72,11 @@ export default class UserService {
 			)
 			.select("s.id as staff_id", "s.username", "p.*", "t.title", "pi.*")
 			.where("s.id", staff_id);
-		const profile = jointRows[0];
+
+		let profile = jointRows[0];
+		profile.date_of_birth = profile.date_of_birth
+			.toISOString()
+			.substring(0, 10);
 		return { success: true, outcome: { profile } };
 	};
 }

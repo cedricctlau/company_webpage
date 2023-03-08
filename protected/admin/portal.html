@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Candy | Staff Directory</title>
+		<title>Candy | Admin Portal</title>
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 			rel="stylesheet"
@@ -18,7 +18,7 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		/>
-		<link rel="stylesheet" href="./directory.css" />
+		<link rel="stylesheet" href="./portal.css" />
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-md bg-dark" data-bs-theme="dark">
@@ -47,14 +47,9 @@
 							<a class="nav-link" href="attendance.html">My Attendance</a>
 						</li>
 						<li class="nav-item">
-							<a
-								class="nav-link active"
-								aria-current="page"
-								href="directory.html"
-								>Staff Directory</a
-							>
+							<a class="nav-link" href="directory.html">Staff Directory</a>
 						</li>
-						<li class="nav-item admin-only" hidden>
+						<li class="nav-item active admin-only" hidden>
 							<a class="nav-link" href="portal.html">Admin Portal</a>
 						</li>
 					</ul>
@@ -82,54 +77,114 @@
 		</nav>
 
 		<main>
-			<section id="filters">
-				<div class="filter-container">
+			<section class="box">
+				<form id="register">
+					<div>
+						<label>Familiar name:</label>
+						<input
+							class="form-control"
+							name="nickname"
+							type="text"
+							id="c-nickname"
+							placeholder="e.g. Andrew"
+						/>
+					</div>
+					<div>
+						<label>First name:</label>
+						<input
+							class="form-control"
+							name="first_name"
+							type="text"
+							placeholder="e.g. Big Boss"
+							required
+						/>
+					</div>
+					<div>
+						<label>Last name:</label>
+						<input
+							class="form-control"
+							name="last_name"
+							type="text"
+							placeholder="e.g. Shek"
+							required
+						/>
+					</div>
+					<!-- <div>
+						<label>Gender:</label>
+						<input
+							class="form-control"
+							name="gender"
+							type="text"
+							placeholder="M / F / Other"
+							required
+						/>
+					</div>
+					<div>
+						<label>Tel:</label>
+						<input
+							class="form-control"
+							name="tel"
+							type="text"
+							placeholder=""
+							required
+						/>
+					</div>
+					<div>
+						<label>HKID:</label>
+						<input
+							class="form-control"
+							name="hkid"
+							type="text"
+							placeholder=""
+							required
+						/>
+					</div>
+					<div>
+						<label>Date of Birth:</label>
+						<input
+							class="form-control"
+							name="date_of_birth"
+							type="date"
+							required
+						/>
+					</div>
+					<div>
+						<label>Address:</label>
+						<input class="form-control" name="address" type="text" required />
+					</div>
+					<div>
+						<label>Bank Account:</label>
+						<input
+							class="form-control"
+							name="bank_account"
+							type="text"
+							required
+						/>
+					</div>
+					<div>
+						<label>Salary:</label>
+						<input class="form-control" name="salary" type="text" required />
+					</div> -->
+
+					<button type="submit" class="btn btn-success">Register</button>
+					<button type="clear" class="btn btn-secondary">Clear</button>
+				</form>
+
+				<div>
+					<label>Email:</label>
+					<input class="form-control" name="email" id="c-email" disabled />
+				</div>
+				<div>
+					<label>Password:</label>
 					<input
-						id="filter-by-name"
 						class="form-control"
-						type="text"
-						placeholder="Search with Staff Name"
+						name="password"
+						id="c-password"
+						disabled
 					/>
-					<select id="filter-by-title" class="form-select"></select>
 				</div>
 			</section>
-			<section id="profile-container"></section>
 		</main>
-
-		<section
-			class="modal fade"
-			id="confProfileModal"
-			tabindex="-1"
-			aria-labelledby="confProfileModalLabel"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5">Confidential Profile</h1>
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="modal"
-							aria-label="Close"
-						></button>
-					</div>
-					<div class="modal-body">
-						<div id="conf-profile-container"></div>
-					</div>
-					<div class="modal-footer">
-						<button
-							id="close-modal-btn"
-							type="button"
-							class="btn btn-secondary"
-							data-bs-dismiss="modal"
-						>
-							Close
-						</button>
-					</div>
-				</div>
-			</div>
-		</section>
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -141,6 +196,6 @@
 			src="https://www.worldweatheronline.com/widget/v5/weather-widget.ashx?loc=918425&wid=3&tu=1&div=wwo-weather-widget-3"
 			async
 		></script>
-		<script type="module" src="directory.js"></script>
+		<script type="module" src="portal.js"></script>
 	</body>
 </html>

@@ -1,29 +1,48 @@
-export async function loadPage() {
-	const res = await fetch("/getSelfProfile");
+export async function viewDetailBtn() {
+	const res = await fetch("/getPriv", {
+		method: "GET",
+		headers: { "Content-type": "application/json" },
+	});
 	const json = await res.json();
 	if (!json.success) {
 		alert("Unexpected error!");
 		return;
 	}
-	const {
-		staff_id,
-		nickname,
-		first_name,
-		last_name,
-		gender,
-		title,
-		tel,
-		picture,
-		username,
-		hkid,
-		date_of_birth,
-		address,
-		bank_account,
-		monthly_salary,
-	} = json.outcome.profile;
-	document.querySelector("#profile-container").innerHTML =
-		/*html*/
-		`<section class="box">
+	if (json.outcome.priv.is_admin) return;
+
+	document.querySelectorAll(".btn.admin-only").forEach((btn) => {
+		btn.removeAttribute("hidden");
+		btn.addEventListener("click", async () => {
+			const id = parseInt(btn.dataset.id);
+			const res = await fetch("/getProfileSudo", {
+				method: "POST",
+				headers: { "Content-type": "application/json" },
+				body: JSON.stringify({ id }),
+			});
+			const json = await res.json();
+			if (!json.success) {
+				alert("Unexpected error!");
+				return;
+			}
+			const {
+				staff_id,
+				nickname,
+				first_name,
+				last_name,
+				gender,
+				title,
+				tel,
+				picture,
+				username,
+				hkid,
+				date_of_birth,
+				address,
+				bank_account,
+				monthly_salary,
+			} = json.outcome.profile;
+			document.querySelector("#conf-profile-container").innerHTML =
+				/*html*/
+				`<section class="box">
 						<div class="profile" data-id="${staff_id}">
 							<img class="propic" src="${picture}" />
 							<div class="directory-body">
@@ -63,4 +82,6 @@ export async function loadPage() {
 							<div class="content">${monthly_salary}</div>
 						</div>
 					</section>`;
+		});
+	});
 }

@@ -1,6 +1,7 @@
 @import "./modules/navbar.css";
 
-#profile-container {
+#profile-container,
+#conf-profile-container {
 	padding: 10px;
 	display: flex;
 	justify-content: center;
@@ -8,13 +9,9 @@
 }
 
 .profile {
-	border: double 3px grey;
-	width: 500px;
-	min-height: 250px;
 	padding: 10px;
 	display: grid;
 	grid-template-columns: 180px auto;
-	margin: 8px;
 	flex-basis: 500px;
 }
 
@@ -55,4 +52,29 @@ select:has(option:disabled:checked[hidden]) {
 
 .filter-container > * {
 	margin: 8px;
+}
+
+.box {
+	border: double 3px grey;
+	width: 500px;
+	margin: 10px;
+	flex-basis: 500px;
+}
+
+#personal-info {
+	padding: 10px;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+#personal-info > div {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.disclaimer {
+	font-size: 12px;
+	text-align: center;
+	color: red;
 }

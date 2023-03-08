@@ -79,6 +79,36 @@
 		<main>
 			<section class="flex-container">
 				<div id="profile-container"></div>
+				<section id="membership" class="box">
+					<div id="dept">
+						<div>You are a member of the following departments:</div>
+						<div class="flex-container">
+							<table>
+								<thead>
+									<tr>
+										<th>Department</th>
+										<th>Department Head</th>
+									</tr>
+								</thead>
+								<tbody id="deptMembership"></tbody>
+							</table>
+						</div>
+					</div>
+					<div id="team">
+						<div>You are a member of the following teams:</div>
+						<div class="flex-container">
+							<table>
+								<thead>
+									<tr>
+										<th>Team</th>
+										<th>Team Head</th>
+									</tr>
+								</thead>
+								<tbody id="teamMembership"></tbody>
+							</table>
+						</div>
+					</div>
+				</section>
 				<button
 					class="btn btn-success"
 					data-bs-toggle="modal"
@@ -86,32 +116,6 @@
 				>
 					Change Password
 				</button>
-			</section>
-			<section id="membership">
-				<div id="dept">
-					<div>You are a member of the following departments:</div>
-					<table>
-						<thead>
-							<tr>
-								<th>Department</th>
-								<th>Department Head</th>
-							</tr>
-						</thead>
-						<tbody id="deptMembership"></tbody>
-					</table>
-				</div>
-				<div id="team">
-					<div>You are a member of the following teams:</div>
-					<table>
-						<thead>
-							<tr>
-								<th>Team</th>
-								<th>Team Head</th>
-							</tr>
-						</thead>
-						<tbody id="teamMembership"></tbody>
-					</table>
-				</div>
 			</section>
 		</main>
 
@@ -125,9 +129,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="changeModalLabel">
-							Change Password
-						</h1>
+						<h1 class="modal-title fs-5">Change Password</h1>
 						<button
 							type="button"
 							class="btn-close"

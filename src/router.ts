@@ -24,6 +24,8 @@ adminRoute.post("/createDept", c1.createDept);
 adminRoute.put("/editDept/:id", c1.editDept);
 adminRoute.post("/createTeam", c1.createTeam);
 adminRoute.put("/editTeam/:id", c1.editTeam);
+adminRoute.post("/getProfileSudo", c1.getProfileSudo);
+adminRoute.post("/genAcc", c1.genAcc);
 
 export const deptAncmtRoute = Router();
 const s2 = new DeptAncmtService(myKnex);

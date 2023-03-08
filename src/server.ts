@@ -31,11 +31,17 @@ app.use("/", userRoute);
 const publicDir = join(__dirname, "../public");
 const uploadDir = join(__dirname, "../uploads");
 const protectedDir = join(__dirname, "../protected");
-const adminDir = join(__dirname, "../admin");
+const adminDir = join(__dirname, "../protected/admin");
 app.use(express.static(publicDir));
 app.use(express.static(uploadDir));
 app.use(loginGuard, express.static(protectedDir));
 app.use(adminGuard, express.static(adminDir));
+
+app.post("/abbr", async (req: express.Request, res: express.Response) => {
+	const { nickname, first_name, last_name, password } = req.body;
+
+	console.log({ nickname, first_name, last_name, password });
+});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

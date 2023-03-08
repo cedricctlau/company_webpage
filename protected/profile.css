@@ -19,11 +19,9 @@
 	margin-bottom: auto;
 }
 
-#front,
-#back {
+.box {
 	border: double 3px grey;
 	width: 500px;
-	height: 300px;
 	margin: 10px;
 	flex-basis: 500px;
 }
@@ -66,8 +64,21 @@
 	align-items: center;
 }
 
+table {
+	width: 80%;
+	text-align: center;
+}
+
 th,
 td,
 tr {
 	border: 1px solid black;
+}
+
+#membership > div {
+	margin: 10px;
+}
+
+.td1 {
+	width: 60%;
 }

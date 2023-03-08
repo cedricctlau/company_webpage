@@ -15,7 +15,7 @@ export async function loadMembership() {
 		const icon = obj.is_dept_head
 			? '<i class="fa-solid fa-check"></i>'
 			: '<i class="fa-solid fa-xmark"></i>';
-		deptTable.innerHTML += /*html*/ `<tr><td>${dept}</td><td>${icon}</td></tr>`;
+		deptTable.innerHTML += /*html*/ `<tr><td class="td1">${dept}</td><td>${icon}</td></tr>`;
 	});
 
 	const teams = json.outcome.teams;
@@ -26,6 +26,6 @@ export async function loadMembership() {
 		const icon = obj.is_team_head
 			? '<i class="fa-solid fa-check"></i>'
 			: '<i class="fa-solid fa-xmark"></i>';
-		teamTable.innerHTML += /*html*/ `<tr><td>${team}</td><td>${icon}</td></tr>`;
+		teamTable.innerHTML += /*html*/ `<tr><td class="td1">${team}</td><td>${icon}</td></tr>`;
 	});
 }

@@ -69,6 +69,26 @@ class AdminController {
 			this.errorHandler(error, req, res);
 		}
 	};
+
+	getProfileSudo = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const staff_id = req.body.id;
+			const json = await this.s.getProfileSudo(staff_id);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
+
+	genAcc = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const { nickname, first_name, last_name } = req.body;
+			const json = await this.s.genAcc(nickname, first_name, last_name);
+			res.json(json);
+		} catch (error) {
+			this.errorHandler(error, req, res);
+		}
+	};
 }
 
 export default AdminController;

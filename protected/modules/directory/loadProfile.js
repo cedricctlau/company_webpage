@@ -11,8 +11,12 @@ export async function loadProfiles() {
 		const { staff_id, name, gender, title, email, tel, picture } = profile;
 		container.innerHTML +=
 			/*html*/
-			`<div class="profile" data-id="${staff_id}" data-name="${name}" data-title="${title}">
-					<img class="propic" src=${picture}>
+			`<div class="box">
+				<div class="profile" data-name="${name}" data-title="${title}">
+					<div>
+						<img class="propic" src=${picture}>
+						<button class="admin-only btn btn-outline-danger" data-id="${staff_id}" data-bs-toggle="modal" data-bs-target="#confProfileModal" hidden>View Detail</button>
+					</div>
 					<div class="profile-body">
 						<div class="label">Name</div>
 						<div class="content">${name}</div>
@@ -25,6 +29,7 @@ export async function loadProfiles() {
 						<div class="label">Email</div>
 						<div class="content">${email}</div>
 					</div>
-				</div>`;
+				</div>
+			</div>`;
 	}
 }
