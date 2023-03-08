@@ -1,0 +1,13 @@
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
+node -v
+sudo apt-get install build-essential nginx curl postgresql postgresql-contrib
+git clone git@github.com:Andrew-Shek-Dev/company_webportal.git
+cd company_webportal
+yarn install
+yarn knex migrate:latest
+yarn knex seed:run
+sudo npm install pm2 -g
+npx tsc
+cd build
+pm2 start server.ts
