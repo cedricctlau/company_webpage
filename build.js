@@ -3,12 +3,12 @@ const { dependencies } = require('./package.json')
 
 const { Generator } = require('npm-dts');
 new Generator({
-  entry: 'server.ts',
+  entry: './src/server.ts',
   output: 'server.d.ts',
 }).generate();
 
 const sharedConfig = {
-  entryPoints: ["./server.ts"],
+  entryPoints: ["./src/server.ts"],
   bundle: true,
   minify: true,
   external:["better-sqlite3","mysql","sqlite3","tedious","pg-native","mysql2","oracledb","pg-query-stream"]
